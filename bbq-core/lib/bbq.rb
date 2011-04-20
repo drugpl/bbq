@@ -1,0 +1,3 @@
+module Bbq
+  # Your code goes here...
+end
