@@ -1,0 +1,81 @@
+== BBQ
+
+Object oriented acceptance testing using personas.
+
+* Ruby
+* OOP
+* DCI (Data Context Interaction) - for roles/personas
+* Test framework independent, based on Capybara
+* Opinionated
+
+== Difference from Cucumber
+
+* No Gherkin
+* Objects and methods instead of steps
+* Easier reuse of code
+* No factories/fixtures 
+
+== Example applications
+
+https://github.com/pawelpacana/roundtrip
+https://github.com/pawelpacana/eventmachine-bbq-example
+https://github.com/drugpl/drug-site
+
+== Installation
+
+  gem install bbq
+
+== Generators
+
+  rails generate bbq:install
+
+== Examples
+
+  test "admin can browse all user tickets" do
+    summaries = ["Forgot my password", "Page is not displayed correctly"]
+    descriptions = ["I lost my yellow note with password under the table!", 
+                    "My IE renders crap instead of crispy fonts!"]
+
+    alice = Roundtrip::TestUser.new
+    alice.extend(Roundtrip::TestUser::TicketReporter)
+    alice.register_and_login
+    alice.open_ticket(summaries.first, descriptions.first)
+
+    bob = Roundtrip::TestUser.new
+    bob.extend(Roundtrip::TestUser::TicketReporter)
+    bob.register_and_login
+    bob.open_ticket(summaries.second, descriptions.second)
+
+    bofh = Roundtrip::TestUser.new(:email => @admin.email)
+    bofh.extend(Roundtrip::TestUser::TicketManager)
+    bofh.login
+    bofh.visit "/support/admin/tickets"
+    assert bofh.see?(*summaries)
+    bofh.click_on(summaries.second)
+    assert bofh.see?(summaries.second, descriptions.second)
+    assert bofh.not_see?(summaries.first, descriptions.first)
+  end
+
+== Additional information
+
+* 2 problems with Cucumber http://andrzejonsoftware.blogspot.com/2011/03/2-problems-with-cucumber.html
+* Object oriented acceptance testing http://andrzejonsoftware.blogspot.com/2011/04/object-oriented-acceptance-testing.html
+* Events in acceptance tests http://andrzejonsoftware.blogspot.com/2011/04/events-in-acceptance-tests.html
+
+== Contributors
+
+...
+
+== Maintainers
+
+* Paweł Pacana (http://github.com/pawelpacana)
+* Andrzej Krzywda (http://andrzejkrzywda.com)
+* Michał Łomnicki (http://mlomnicki.com)
+
+== Future plans
+
+* Events (http://andrzejonsoftware.blogspot.com/2011/04/events-in-acceptance-tests.html)
+
+== License
+
+MIT License
