@@ -12,14 +12,14 @@ Object oriented acceptance testing using personas.
 
 * No Gherkin
 * Objects and methods instead of steps
-* Easier reuse of code
+* Easier code reuse
 * No factories/fixtures 
 
 == Example applications
 
-https://github.com/pawelpacana/roundtrip
-https://github.com/pawelpacana/eventmachine-bbq-example
-https://github.com/drugpl/drug-site
+* https://github.com/pawelpacana/roundtrip
+* https://github.com/pawelpacana/eventmachine-bbq-example
+* https://github.com/drugpl/drug-site
 
 == Installation
 
