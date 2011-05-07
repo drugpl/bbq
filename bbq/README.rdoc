@@ -1,3 +1,7 @@
+== Warning & disclaimer
+
+This gem is currently under development. We're targeting most popular use case - Rails. However the philosophy behind it is not limited to Rails nor web applications in general. There is example usage with EventMachine. Feel free to modify it for your own needs.
+
 == BBQ
 
 Object oriented acceptance testing using personas.
@@ -13,7 +17,7 @@ Object oriented acceptance testing using personas.
 * No Gherkin
 * Objects and methods instead of steps
 * Easier code reuse
-* No factories/fixtures 
+* No factories/fixtures
 
 == Example applications
 
@@ -33,7 +37,7 @@ Object oriented acceptance testing using personas.
 
   test "admin can browse all user tickets" do
     summaries = ["Forgot my password", "Page is not displayed correctly"]
-    descriptions = ["I lost my yellow note with password under the table!", 
+    descriptions = ["I lost my yellow note with password under the table!",
                     "My IE renders crap instead of crispy fonts!"]
 
     alice = Roundtrip::TestUser.new
