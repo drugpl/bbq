@@ -6,11 +6,10 @@ Gem::Specification.new do |s|
   s.name        = "bbq"
   s.version     = Bbq::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Paweł Pacana"]
-  s.email       = ["pawel.pacana@gmail.com"]
+  s.authors     = ["DRUG - Dolnośląska Grupa Użytkowników Ruby"]
+  s.email       = ["pawe.pacana+bbq@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{Acceptance testing philosophy for grown-ups}
-  s.description = %q{Objected oriented acceptance testing using personas and events.}
+  s.description = %q{Objected oriented acceptance testing using personas.}
 
   s.rubyforge_project = "bbq"
 
@@ -19,5 +18,6 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency "capybara",       "~> 0.4.1.2"
+  s.add_dependency "capybara", "~> 0.4.1.2"
+  s.add_dependency "rails",    ">= 3.0.0"
 end
