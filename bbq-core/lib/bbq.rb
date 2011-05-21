@@ -1,3 +1,7 @@
+require 'bbq/railtie' if defined?(Rails)
+
 module Bbq
-  # Your code goes here...
+  def self.root
+    @root ||= Pathname.new(File.expand_path(File.join(File.dirname(__FILE__), '..')))
+  end
 end

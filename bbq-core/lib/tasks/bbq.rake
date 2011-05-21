@@ -1,4 +1,4 @@
-#require 'rake/testtask'
+require 'rake/testtask'
 
 Rake::TestTask.new("test:acceptance") do |t|
   t.libs << 'test'
