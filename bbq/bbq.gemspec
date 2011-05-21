@@ -21,6 +21,5 @@ Gem::Specification.new do |s|
   s.add_dependency "capybara",  "~> 0.4.1.2"
   s.add_dependency "rails",     ">= 3.0.0"
 
-  s.add_development_dependency "devise",  "~> 1.3.4"
   s.add_development_dependency "sqlite3", "~> 1.3.3"
 end
