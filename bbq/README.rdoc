@@ -60,6 +60,25 @@ Object oriented acceptance testing using personas.
     assert bofh.not_see?(summaries.first, descriptions.first)
   end
 
+=== Deal with Devise
+
+  require 'bbq/test_user'
+  require 'bbq/devise'
+
+  class TestUser < Bbq::TestUser
+    after do
+      spicy_devise # extend user with spicy_devise ;-)
+    end
+  end
+
+After that TestUser have *login* *logout* *register* *register_and_login* methods.
+
+  test "user register with devise" do
+    user = TestUser.new # or TestUser.new(:email => "email@example.com", :password => "secret")
+    user.register_and_login
+    user.see?("Stuff after auth")
+  end
+
 == Additional information
 
 * 2 problems with Cucumber http://andrzejonsoftware.blogspot.com/2011/03/2-problems-with-cucumber.html
