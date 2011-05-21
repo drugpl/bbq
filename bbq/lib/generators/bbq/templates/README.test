@@ -1,0 +1,5 @@
+
+To finish setup, place in your test/test_helper.rb the following:
+
+  require 'bbq/test'
+
