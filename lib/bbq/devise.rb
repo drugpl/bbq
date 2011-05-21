@@ -3,29 +3,28 @@ require 'bbq/util'
 if defined?(Devise)
   module Bbq
     class TestUser
-      include ActionView::Helpers::UrlHelper
-      include Rails.application.routes.url_helpers
 
       def initialize(env, options={})
         super
-        @email = options[:email] || next_email
+        @devise_authentication_key = Devise.authentication_keys.first
+        @email = options[@devise_authentication_key.to_sym] || next_email
         @password = options[:password] || next_password
         @scope = Devise.mappings.first.singular.to_s
       end
 
       def register
         @session.visit send("new_#{self.scope}_registration_path")
-        @session.fill_in "Email", :with => @email
-        @session.fill_in "Password", :with => @password
-        @session.fill_in "Password confirmation", :with => @password
-        @session.click_on "Sign up"
+        @session.fill_in "#{self.scope}_#{self.devise_authentication_key}", :with => @email
+        @session.fill_in "#{self.scope}_password", :with => @password
+        @session.fill_in "#{self.scope}_password_confirmation", :with => @password
+        @session.click_on "#{self.scope}_submit"
       end
 
       def login
         @session.visit send("new_#{self.scope}_session")
-        @session.fill_in "Email", :with => @email
-        @session.fill_in "Password", :with => @password
-        @session.click_on "Sign in"
+        @session.fill_in "#{self.scope}_#{self.devise_authentication_key}", :with => @email
+        @session.fill_in "#{self.scope}_password", :with => @password
+        @session.click_on "#{self.scope}_submit"
       end
 
       def logout

@@ -3,6 +3,9 @@ require 'bbq/util'
 
 module Bbq
   class TestUser
+    include ActionView::Helpers::UrlHelper
+    include Rails.application.routes.url_helpers
+
     attr_reader :session, :env, :options
 
     def initialize(env, options = {})
