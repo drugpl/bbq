@@ -71,7 +71,7 @@ Object oriented acceptance testing using personas.
     end
   end
 
-After that TestUser have *login* *logout* *register* *register_and_login* methods.
+After that TestUser have *login*, *logout*, *register*, *register_and_login* methods.
 
   test "user register with devise" do
     user = TestUser.new # or TestUser.new(:email => "email@example.com", :password => "secret")
