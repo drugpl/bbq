@@ -1,12 +1,11 @@
 require 'capybara/rails'
 require 'bbq/util'
-require 'bbq/before_after_init'
 
 module Bbq
   class TestUser
     include ActionDispatch::Routing::UrlFor
     include Rails.application.routes.url_helpers
-    
+
     attr_reader :session, :env, :options
 
     def initialize(env, options = {})

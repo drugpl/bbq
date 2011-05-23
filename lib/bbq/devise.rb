@@ -19,7 +19,7 @@ if defined?(Devise)
       end
 
       def register
-        @session.visit send("new_#{@scope}_registration_path")
+        @session.visit send("new_#{self.scope}_registration_path")
         @session.fill_in "#{self.scope}_#{self.devise_authentication_key}", :with => @email
         @session.fill_in "#{self.scope}_password", :with => @password
         @session.fill_in "#{self.scope}_password_confirmation", :with => @password
