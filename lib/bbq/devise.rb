@@ -3,15 +3,19 @@ if defined?(Devise)
   require 'bbq/test'
 
   module Bbq
-    class TestUser
+    module SpicyDevise
 
-      attr_reader :devise_authentication_key, :email, :password, :scope
+      attr_accessor :devise_authentication_key, :email, :password, :scope
 
-      def spicy_devise
-        @devise_authentication_key = Devise.authentication_keys.first
-        @email = options[@devise_authentication_key.to_sym] || next_email
-        @password = options[:password] || next_password
-        @scope = Devise.mappings.first.second.singular.to_s
+      def self.included(other)
+        other.add_callback(self)
+      end
+
+      def self.init(user)
+        user.devise_authentication_key = Devise.authentication_keys.first
+        user.email = user.options[user.devise_authentication_key.to_sym] || next_email
+        user.password = user.options[:password] || next_password
+        user.scope = Devise.mappings.first.second.singular.to_s
       end
 
       def register
@@ -37,12 +41,11 @@ if defined?(Devise)
         register
       end
 
-      protected
-      def next_email
+      def self.next_email
         "#{ActiveSupport::SecureRandom.hex(3)}@example.com"
       end
 
-      def next_password
+      def self.next_password
         "#{ActiveSupport::SecureRandom.hex(8)}"
       end
     end
