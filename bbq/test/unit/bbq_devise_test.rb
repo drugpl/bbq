@@ -6,9 +6,7 @@ require 'bbq/test_user'
 require 'bbq/devise'
 
 class TestUser < Bbq::TestUser
-  after do
-    spicy_devise
-  end
+  include Bbq::SpicyDevise
 end
 
 class BbqDeviseTest < Test::Unit::TestCase
