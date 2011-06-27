@@ -19,6 +19,7 @@ class TestUser < Bbq::TestUser
 end
 
 class BbqTestUserTest < Test::Unit::TestCase
+
   def test_capybara_dsl_methods
     user = TestUser.new()
     Capybara::Session::DSL_METHODS.each do |m|
@@ -37,4 +38,13 @@ class BbqTestUserTest < Test::Unit::TestCase
     user.roles(:video_uploader)
     %w(comment upload moderate).each { |m| assert user.respond_to?(m) }
   end
+
+  def test_user_eyes
+    @user = TestUser.new()
+    @user.register
+    assert_raise(MiniTest::Assertion){ @user.not_see?("BBQ") }
+    assert_raise(MiniTest::Assertion){ @user.see?("MIRACLE") }
+    User.find_by_email(@user.email).destroy
+  end
+
 end
