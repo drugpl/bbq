@@ -1,8 +1,10 @@
 require 'active_support'
 require 'test/unit'
 require 'bbq/test_user'
+require 'test/unit/assertions'
 
 module Bbq
+
   class TestCase < ActiveSupport::TestCase
     class << self
       alias :scenario :test
@@ -14,16 +16,21 @@ module Bbq
 
   # test/unit specific methods for test_user
   class TestUser
+
+    include Test::Unit::Assertions
+
     def see?(*args)
       args.each do |arg|
-        env.assert session.has_content?(arg), "Expecting to see \"#{arg}\", text not found."
+        assert has_content?(arg), "Expecting to see \"#{arg}\", text not found."
       end
     end
 
     def not_see?(*args)
       args.each do |arg|
-        env.assert session.has_no_content?(arg), "Found \"#{arg}\", which was unexpected."
+        assert has_no_content?(arg), "Found \"#{arg}\", which was unexpected."
       end
     end
+
   end
+
 end
