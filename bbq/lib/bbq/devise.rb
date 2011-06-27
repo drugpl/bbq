@@ -46,7 +46,7 @@ if defined?(Devise)
       end
 
       def self.next_password
-        "#{ActiveSupport::SecureRandom.hex(8)}"
+        ActiveSupport::SecureRandom.hex(8)
       end
     end
   end
