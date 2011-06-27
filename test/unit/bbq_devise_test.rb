@@ -19,7 +19,6 @@ class BbqDeviseTest < Test::Unit::TestCase
     @user = TestUser.new(self)
     @user.register
     @user.see? "BBQ"
-
   end
 
   def test_login_user
