@@ -16,13 +16,13 @@ class BbqDeviseTest < Test::Unit::TestCase
   end
 
   def test_user_register
-    @user = TestUser.new(self)
+    @user = TestUser.new()
     @user.register
     @user.see? "BBQ"
   end
 
   def test_login_user
-    @user = TestUser.new(self)
+    @user = TestUser.new()
     @user.register
     @user.logout
     @user.login
@@ -30,7 +30,7 @@ class BbqDeviseTest < Test::Unit::TestCase
   end
 
   def test_user_wihout_login
-    @user = TestUser.new(self)
+    @user = TestUser.new()
     @user.visit @user.root_path
     @user.not_see? "BBQ"
   end

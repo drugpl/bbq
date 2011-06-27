@@ -10,12 +10,12 @@ module Bbq
     include Rails.application.routes.url_helpers
     include Capybara::DSL
 
-    attr_reader :session, :env, :options
+    attr_reader :options
 
-    def initialize(env, options = {})
+    def initialize(options = {})
       @session_name = options.delete(:session_name)
       @current_driver = options.delete(:driver)
-      @env, @options = env, options
+      @options = options
 
       @@_callbacks.each do |callback|
         callback[:extension].send(callback[:method], self)
