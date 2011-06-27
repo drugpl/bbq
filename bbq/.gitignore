@@ -2,6 +2,7 @@
 .bundle
 Gemfile.lock
 pkg/*
+bin/*
 test/dummy/db/*.sqlite3
 test/dummy/log/*.log
 test/dummy/tmp/
