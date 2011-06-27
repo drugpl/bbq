@@ -19,8 +19,8 @@ class BbqTwoSimultaneousUsersTest < Test::Unit::TestCase
   end
 
   def test_user_register
-    @andy = TestUser.new(self)
-    @dhh =  TestUser.new(self)
+    @andy = TestUser.new()
+    @dhh =  TestUser.new()
 
     @andy.register
     @dhh.register

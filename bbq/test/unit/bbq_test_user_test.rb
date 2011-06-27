@@ -20,14 +20,14 @@ end
 
 class BbqTestUserTest < Test::Unit::TestCase
   def test_capybara_dsl_methods
-    user = TestUser.new(self)
+    user = TestUser.new()
     Capybara::Session::DSL_METHODS.each do |m|
       assert user.respond_to?(m)
     end
   end
 
   def test_roles
-    user = TestUser.new(self)
+    user = TestUser.new()
     %w(comment upload moderate).each { |m| assert !user.respond_to?(m) }
 
     user.roles(:commenter, "comment_moderator")
