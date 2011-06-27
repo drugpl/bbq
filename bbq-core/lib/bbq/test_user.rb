@@ -13,12 +13,23 @@ module Bbq
     attr_reader :session, :env, :options
 
     def initialize(env, options = {})
+      @session_name = options.delete(:session_name)
       @current_driver = options.delete(:driver)
       @env, @options = env, options
 
       @@_callbacks.each do |callback|
         callback[:extension].send(callback[:method], self)
       end
+    end
+
+    def page
+      Capybara.using_session(session_name) do
+        Capybara.current_session
+      end
+    end
+
+    def session_name
+      @session_name ||= ActiveSupport::SecureRandom.hex(8)
     end
 
     def roles(*names)
