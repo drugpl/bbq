@@ -1,16 +1,19 @@
 require 'capybara/rails'
+require 'capybara/dsl'
 require 'bbq/util'
 
 module Bbq
+  
   class TestUser
+    
     include ActionDispatch::Routing::UrlFor
     include Rails.application.routes.url_helpers
+    include Capybara::DSL
 
     attr_reader :session, :env, :options
 
     def initialize(env, options = {})
-      @driver  = options.delete(:driver) || Capybara.current_driver
-      @session = Capybara::Session.new(@driver, Capybara.app)
+      @current_driver = options.delete(:driver)
       @env, @options = env, options
 
       @@_callbacks.each do |callback|
@@ -25,17 +28,11 @@ module Bbq
       end
     end
 
-    Capybara::Session::DSL_METHODS.each do |method|
-      class_eval <<-RUBY
-        def #{method}(*args, &block)
-          session.send(:#{method}, *args, &block)
-        end
-      RUBY
-    end
-
     def self.add_callback(extension, method=:init)
       @@_callbacks ||= []
       @@_callbacks << {:extension => extension, :method => method}
     end
+
   end
+
 end

@@ -19,22 +19,22 @@ if defined?(Devise)
       end
 
       def register
-        @session.visit send("new_#{self.scope}_registration_path")
-        @session.fill_in "#{self.scope}_#{self.devise_authentication_key}", :with => @email
-        @session.fill_in "#{self.scope}_password", :with => @password
-        @session.fill_in "#{self.scope}_password_confirmation", :with => @password
-        @session.find(:xpath, "//input[@name='commit']").click
+        visit send("new_#{self.scope}_registration_path")
+        fill_in "#{self.scope}_#{self.devise_authentication_key}", :with => @email
+        fill_in "#{self.scope}_password", :with => @password
+        fill_in "#{self.scope}_password_confirmation", :with => @password
+        find(:xpath, "//input[@name='commit']").click
       end
 
       def login
-        @session.visit send("new_#{self.scope}_session_path")
-        @session.fill_in "#{self.scope}_#{self.devise_authentication_key}", :with => @email
-        @session.fill_in "#{self.scope}_password", :with => @password
-        @session.find(:xpath, "//input[@name='commit']").click
+        visit send("new_#{self.scope}_session_path")
+        fill_in "#{self.scope}_#{self.devise_authentication_key}", :with => @email
+        fill_in "#{self.scope}_password", :with => @password
+        find(:xpath, "//input[@name='commit']").click
       end
 
       def logout
-        @session.visit send("destroy_#{self.scope}_session_path")
+        visit send("destroy_#{self.scope}_session_path")
       end
 
       def register_and_login

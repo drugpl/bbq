@@ -16,13 +16,13 @@ module Bbq
   class TestUser
     def see?(*args)
       args.each do |arg|
-        env.assert session.has_content?(arg), "Expecting to see \"#{arg}\", text not found."
+        env.assert has_content?(arg), "Expecting to see \"#{arg}\", text not found."
       end
     end
 
     def not_see?(*args)
       args.each do |arg|
-        env.assert session.has_no_content?(arg), "Found \"#{arg}\", which was unexpected."
+        env.assert has_no_content?(arg), "Found \"#{arg}\", which was unexpected."
       end
     end
   end
