@@ -3,7 +3,7 @@ if defined?(Devise)
   require 'bbq/test'
 
   module Bbq
-    module SpicyDevise
+    module Devise
 
       attr_accessor :devise_authentication_key, :email, :password, :scope
 
@@ -12,10 +12,10 @@ if defined?(Devise)
       end
 
       def self.init(user)
-        user.devise_authentication_key = Devise.authentication_keys.first
+        user.devise_authentication_key = ::Devise.authentication_keys.first
         user.email = user.options[user.devise_authentication_key.to_sym] || next_email
         user.password = user.options[:password] || next_password
-        user.scope = Devise.mappings.first.second.singular.to_s
+        user.scope = ::Devise.mappings.first.second.singular.to_s
       end
 
       def register
