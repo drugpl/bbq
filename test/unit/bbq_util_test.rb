@@ -10,7 +10,7 @@ module Commenter
 end
 
 class BbqUtilTest < Test::Unit::TestCase
-  
+
   def test_find_module_in_object_namespace
     assert_commenter(User.new, User::Commenter)
   end
@@ -27,7 +27,7 @@ class BbqUtilTest < Test::Unit::TestCase
     assert_commenter(nil, ::Commenter)
   end
 
-  
+
   private
 
 

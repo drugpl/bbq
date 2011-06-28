@@ -34,6 +34,6 @@ class BbqDeviseTest < Test::Unit::TestCase
     @user.visit @user.root_path
     @user.not_see? "BBQ"
   end
-  
+
 end
 
