@@ -36,86 +36,89 @@ Installation
 
 First, add BBQ to your apps Gemfile:
 
-    ```ruby
-    # Gemfile
-    gem "bbq", :git => "git://github.com/drugpl/bbq.git"
-    ```
+```ruby
+# Gemfile
+gem "bbq", :git => "git://github.com/drugpl/bbq.git"
+```
 
 Run install generator:
 
-    rails generate bbq:install
-
+```
+rails generate bbq:install
+```
 
 Require BBQ in test/test_helper.rb:
 
-    ```ruby
-    require "bbq/test"
-    ```
+```ruby
+require "bbq/test"
+```
 
 Feature generator
 =================
 
-    rails g bbq:test MyFeatureName
+```
+rails g bbq:test MyFeatureName
+```
 
 Examples
 ========
 
-    ```ruby
-    test "admin can browse all user tickets" do
-      summaries = ["Forgot my password", "Page is not displayed correctly"]
-      descriptions = ["I lost my yellow note with password under the table!",
-                      "My IE renders crap instead of crispy fonts!"]
+```ruby
+test "admin can browse all user tickets" do
+  summaries = ["Forgot my password", "Page is not displayed correctly"]
+  descriptions = ["I lost my yellow note with password under the table!",
+                  "My IE renders crap instead of crispy fonts!"]
 
-      alice = Roundtrip::TestUser.new
-      alice.extend(Roundtrip::TestUser::TicketReporter)
-      alice.register_and_login
-      alice.open_ticket(summaries.first, descriptions.first)
+  alice = Roundtrip::TestUser.new
+  alice.extend(Roundtrip::TestUser::TicketReporter)
+  alice.register_and_login
+  alice.open_ticket(summaries.first, descriptions.first)
 
-      bob = Roundtrip::TestUser.new
-      bob.extend(Roundtrip::TestUser::TicketReporter)
-      bob.register_and_login
-      bob.open_ticket(summaries.second, descriptions.second)
+  bob = Roundtrip::TestUser.new
+  bob.extend(Roundtrip::TestUser::TicketReporter)
+  bob.register_and_login
+  bob.open_ticket(summaries.second, descriptions.second)
 
-      bofh = Roundtrip::TestUser.new(:email => @admin.email)
-      bofh.extend(Roundtrip::TestUser::TicketManager)
-      bofh.login
-      bofh.visit "/support/admin/tickets"
-      assert bofh.see?(*summaries)
-      bofh.click_on(summaries.second)
-      assert bofh.see?(summaries.second, descriptions.second)
-      assert bofh.not_see?(summaries.first, descriptions.first)
-    end
-    ```
+  bofh = Roundtrip::TestUser.new(:email => @admin.email)
+  bofh.extend(Roundtrip::TestUser::TicketManager)
+  bofh.login
+  bofh.visit "/support/admin/tickets"
+  assert bofh.see?(*summaries)
+  bofh.click_on(summaries.second)
+  assert bofh.see?(summaries.second, descriptions.second)
+  assert bofh.not_see?(summaries.first, descriptions.first)
+end
+```
 
 Deal with Devise
 ================
 
-    ```ruby
-    require "bbq/test_user"
-    require "bbq/devise"
+```ruby
+require "bbq/test_user"
+require "bbq/devise"
 
-    class TestUser < Bbq::TestUser
-      include Bbq::SpicyDevise
-    end
-    ```
+class TestUser < Bbq::TestUser
+  include Bbq::SpicyDevise
+end
+```
 
 After that TestUser have *login*, *logout*, *register*, *register_and_login* methods.
 
-    ```ruby
-    test "user register with devise" do
-      user = TestUser.new # or TestUser.new(:email => "email@example.com", :password => "secret")
-      user.register_and_login
-      user.see?("Stuff after auth")
-    end
-    ```
-
+```ruby
+test "user register with devise" do
+  user = TestUser.new # or TestUser.new(:email => "email@example.com", :password => "secret")
+  user.register_and_login
+  user.see?("Stuff after auth")
+end
+```
 
 Development environment
 =======================
 
-    bundle install
-    bundle exec rake test
-
+```
+bundle install
+bundle exec rake test
+```
 
 Additional information
 ======================
