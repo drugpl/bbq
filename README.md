@@ -98,7 +98,7 @@ require "bbq/test_user"
 require "bbq/devise"
 
 class TestUser < Bbq::TestUser
-  include Bbq::SpicyDevise
+  include Bbq::Devise
 end
 ```
 
