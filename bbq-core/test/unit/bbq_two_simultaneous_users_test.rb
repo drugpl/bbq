@@ -50,6 +50,6 @@ class BbqTwoSimultaneousUsersTest < Test::Unit::TestCase
     @andy.not_see?(Text)
     @dhh.not_see?(Text)
   end
-  
+
 end
 
