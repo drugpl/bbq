@@ -25,5 +25,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake",    "~> 0.8.7"
   s.add_development_dependency "rdoc",    "~> 3.7"
   s.add_development_dependency "devise",  "~> 1.4.0"
-  s.add_development_dependency "minitest_tu_shim"
+
 end
