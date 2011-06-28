@@ -6,11 +6,11 @@ rescue LoadError
 end
 
 Bundler::GemHelper.install_tasks
-require 'rake/rdoctask'
+require 'rdoc/task'
 
-Rake::RDocTask.new(:rdoc) do |rdoc|
+RDoc::Task.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'BbqVendor'
+  rdoc.title    = 'Bbq'
   rdoc.options << '--line-numbers' << '--inline-source'
   rdoc.rdoc_files.include('README.rdoc')
   rdoc.rdoc_files.include('lib/**/*.rb')
