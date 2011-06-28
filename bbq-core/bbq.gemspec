@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Bbq::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["DRUG - Dolnośląska Grupa Użytkowników Ruby"]
-  s.email       = ["pawel.pacana+bbq@gmail.com"]
+  s.email       = ["bbq@drug.org.pl"]
   s.homepage    = ""
   s.description = %q{Objected oriented acceptance testing using personas.}
 
