@@ -79,10 +79,6 @@ After that TestUser have *login*, *logout*, *register*, *register_and_login* met
 
 == Development environment
 
-  cd test/dummy/
-  rake db:migrate
-  RAILS_ENV=test rake db:migrate
-  cd ../..
   bundle install
   rake test
 
@@ -92,16 +88,17 @@ After that TestUser have *login*, *logout*, *register*, *register_and_login* met
 * Object oriented acceptance testing http://andrzejonsoftware.blogspot.com/2011/04/object-oriented-acceptance-testing.html
 * Events in acceptance tests http://andrzejonsoftware.blogspot.com/2011/04/events-in-acceptance-tests.html
 
-== Contributors
-
-...
-
 == Maintainers
 
 * Paweł Pacana (http://github.com/pawelpacana)
 * Andrzej Krzywda (http://andrzejkrzywda.com)
 * Michał Łomnicki (http://mlomnicki.com)
 * Robert Pankowecki (http://robert.pankowecki.pl)
+* Piotr Niełacny (http://ruby-blog.pl)
+
+== Contributors
+
+...
 
 == Future plans
 
