@@ -42,8 +42,8 @@ class BbqTestUserTest < Test::Unit::TestCase
   def test_implicit_user_eyes
     @user = TestUser.new
     @user.register
-    assert_raises(MiniTest::Assertion){ @user.not_see!("BBQ") }
-    assert_raises(MiniTest::Assertion){ @user.see!("MIRACLE") }
+    assert_raises(FAILED_ASSERTION) { @user.not_see!("BBQ") }
+    assert_raises(FAILED_ASSERTION) { @user.see!("MIRACLE") }
     User.find_by_email(@user.email).destroy
   end
 
