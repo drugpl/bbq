@@ -3,9 +3,9 @@ require 'capybara/dsl'
 require 'bbq/util'
 
 module Bbq
-  
+
   class TestUser
-    
+
     include ActionDispatch::Routing::UrlFor
     include Rails.application.routes.url_helpers
     include Capybara::DSL
