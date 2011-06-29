@@ -5,7 +5,7 @@ require 'capybara/rails'
 require 'bbq/test_user'
 require 'bbq/devise'
 
-class TestUser < Bbq::TestUser
+class DeviseTestUser < Bbq::TestUser
   include Bbq::Devise
 end
 
@@ -19,8 +19,8 @@ class BbqTwoSimultaneousUsersTest < Test::Unit::TestCase
   end
 
   def test_user_register
-    @andy = TestUser.new()
-    @dhh =  TestUser.new()
+    @andy = DeviseTestUser.new
+    @dhh =  DeviseTestUser.new
 
     @andy.register
     @dhh.register
