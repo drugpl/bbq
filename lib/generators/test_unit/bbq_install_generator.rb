@@ -7,8 +7,8 @@ module TestUnit
     end
 
     def generate_test_user
-      empty_directory "test/acceptance/support"
-      template "test_user.rb", "test/acceptance/support/test_user.rb"
+      empty_directory "test/support"
+      template "test_user.rb", "test/support/test_user.rb"
     end
 
     def show_readme
