@@ -1,5 +1,10 @@
 require 'test_helper'
 require 'bbq/test_user'
+require 'bbq/devise'
+
+class DeviseTestUser < Bbq::TestUser
+  include Bbq::Devise
+end
 
 class TestUser < Bbq::TestUser
   module Commenter
@@ -40,7 +45,7 @@ class BbqTestUserTest < Test::Unit::TestCase
   end
 
   def test_implicit_user_eyes
-    @user = TestUser.new
+    @user = DeviseTestUser.new
     @user.register
     assert_raises(FAILED_ASSERTION) { @user.not_see!("BBQ") }
     assert_raises(FAILED_ASSERTION) { @user.see!("MIRACLE") }
@@ -48,7 +53,7 @@ class BbqTestUserTest < Test::Unit::TestCase
   end
 
   def test_explicit_user_eyes
-    @user = TestUser.new
+    @user = DeviseTestUser.new
     @user.register
     assert @user.see?("BBQ")
     assert @user.not_see?("MIRACLE")
