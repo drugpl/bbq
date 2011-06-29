@@ -9,7 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["DRUG - Dolnośląska Grupa Użytkowników Ruby"]
   s.email       = ["bbq@drug.org.pl"]
   s.homepage    = ""
-  s.description = %q{Objected oriented acceptance testing using personas.}
+  s.description = %q{Objected oriented acceptance testing for Rails, using personas.}
+  s.summary     = %q{Objected oriented acceptance testing for Rails, using personas.}
 
   s.rubyforge_project = "bbq"
 
