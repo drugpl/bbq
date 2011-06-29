@@ -25,18 +25,10 @@ module Bbq
       end
     end
 
-    def see?(*args)
-      args.all? { |arg| has_content?(arg) }
-    end
-
     def not_see!(*args)
       args.each do |arg|
         assert has_no_content?(arg), "Found \"#{arg}\", which was unexpected."
       end
-    end
-
-    def not_see?(*args)
-      args.all? { |arg| has_no_content?(arg) }
     end
 
   end
