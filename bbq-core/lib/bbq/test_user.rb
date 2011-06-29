@@ -12,12 +12,16 @@ module Bbq
 
     attr_reader :options
 
+    class << self
+      attr_accessor :callbacks
+    end
+
     def initialize(options = {})
       @session_name = options.delete(:session_name)
       @current_driver = options.delete(:driver)
       @options = options
 
-      @@_callbacks.each do |callback|
+      self.class.callbacks && self.class.callbacks.each do |callback|
         callback[:extension].send(callback[:method], self)
       end
     end
@@ -40,8 +44,8 @@ module Bbq
     end
 
     def self.add_callback(extension, method=:init)
-      @@_callbacks ||= []
-      @@_callbacks << {:extension => extension, :method => method}
+      self.callbacks ||= []
+      self.callbacks << {:extension => extension, :method => method}
     end
 
     def see?(*args)
