@@ -44,6 +44,14 @@ module Bbq
       @@_callbacks << {:extension => extension, :method => method}
     end
 
+    def see?(*args)
+      args.all? { |arg| has_content?(arg) }
+    end
+
+    def not_see?(*args)
+      args.all? { |arg| has_no_content?(arg) }
+    end
+
   end
 
 end
