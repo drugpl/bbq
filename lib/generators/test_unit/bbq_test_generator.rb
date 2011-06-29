@@ -1,5 +1,5 @@
 module TestUnit
-  class BbqTestCaseGenerator < Rails::Generators::NamedBase
+  class BbqTestGenerator < Rails::Generators::NamedBase
     source_root Bbq.root.join("lib/generators/test_unit/templates")
 
     def create_test
