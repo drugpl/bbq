@@ -1,6 +1,0 @@
-Description:
-    Creates directories to help you structure your acceptance
-    scenarios and generates test persona stub.
-
-Example:
-    rails generate bbq:install
