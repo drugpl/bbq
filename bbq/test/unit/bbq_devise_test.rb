@@ -5,7 +5,7 @@ require 'capybara/rails'
 require 'bbq/test_user'
 require 'bbq/devise'
 
-class TestUser < Bbq::TestUser
+class DeviseTestUser < Bbq::TestUser
   include Bbq::Devise
 end
 
@@ -16,13 +16,13 @@ class BbqDeviseTest < Test::Unit::TestCase
   end
 
   def test_user_register
-    @user = TestUser.new()
+    @user = DeviseTestUser.new
     @user.register
     @user.see? "BBQ"
   end
 
   def test_login_user
-    @user = TestUser.new()
+    @user = DeviseTestUser.new
     @user.register
     @user.logout
     @user.login
@@ -30,7 +30,7 @@ class BbqDeviseTest < Test::Unit::TestCase
   end
 
   def test_user_wihout_login
-    @user = TestUser.new()
+    @user = DeviseTestUser.new
     @user.visit @user.root_path
     @user.not_see? "BBQ"
   end
