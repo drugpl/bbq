@@ -6,6 +6,7 @@ FAILED_ASSERTION = RUBY_VERSION < "1.9" ? Test::Unit::AssertionFailedError : Min
 
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require "rails/test_help"
+require "rails/generators/test_case"
 
 Rails.backtrace_cleaner.remove_silencers!
 
