@@ -43,13 +43,13 @@ class BbqTestUnitTest < Test::Unit::TestCase
           user.see!("MIRACLE")
           user.not_see!("BBQ")
 
-          assert_raises(FAILED_ASSERTION) { @user.see!("BBQ") }
-          assert_raises(FAILED_ASSERTION) { @user.not_see!("MIRACLE") }
+          assert_raises(FAILED_ASSERTION) { user.see!("BBQ") }
+          assert_raises(FAILED_ASSERTION) { user.not_see!("MIRACLE") }
         end
       end
     TESTUNIT
 
-    run_cmd 'ruby -Ilib -Itest/dummy/test test/dummy/test/acceptance/dsl_test.rb'
-    assert_match /1 tests, 1 assertions, 0 failures, 0 errors/, output
+    run_cmd 'ruby -Ilib -Itest/dummy/test test/dummy/test/acceptance/implicit_user_eyes_test.rb'
+    assert_match /1 tests, 2 assertions, 0 failures, 0 errors/, output
   end
 end

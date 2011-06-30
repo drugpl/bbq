@@ -12,20 +12,6 @@ module Bbq
     end
   end
 
-  class TestUser
-    def see!(*args)
-      args.each do |arg|
-        page.should have_content(arg)
-      end
-    end
-
-    def not_see!(*args)
-      args.each do |arg|
-        page.should have_no_content(arg)
-      end
-    end
-  end
-
   module RSpecMatchers
     class TestUserEyes
       def initialize(negative, *args)
@@ -65,6 +51,24 @@ module Bbq
 
     def not_see(*args)
       TestUserEyes.new(true, *args)
+    end
+  end
+
+  class TestUser
+    include RSpec::Matchers
+    include Capybara::RSpecMatchers
+    include Bbq::RSpecMatchers
+
+    def see!(*args)
+      args.each do |arg|
+        page.should have_content(arg)
+      end
+    end
+
+    def not_see!(*args)
+      args.each do |arg|
+        page.should have_no_content(arg)
+      end
     end
   end
 end
