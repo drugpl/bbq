@@ -1,6 +1,5 @@
 if defined?(Devise)
-
-  require 'bbq/test'
+  require 'securerandom'
 
   module Bbq
     module Devise
@@ -42,11 +41,11 @@ if defined?(Devise)
       end
 
       def self.next_email
-        "#{ActiveSupport::SecureRandom.hex(3)}@example.com"
+        "#{SecureRandom.hex(3)}@example.com"
       end
 
       def self.next_password
-        ActiveSupport::SecureRandom.hex(8)
+        SecureRandom.hex(8)
       end
     end
   end
