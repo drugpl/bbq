@@ -1,5 +1,6 @@
 require 'capybara/rails'
 require 'capybara/dsl'
+require 'securerandom'
 require 'bbq/util'
 
 module Bbq
@@ -36,7 +37,7 @@ module Bbq
 
     # Discuss: Shall we freeze ?
     def session_name
-      @session_name ||= ActiveSupport::SecureRandom.hex(8)
+      @session_name ||= SecureRandom.hex(8)
     end
 
     # Discuss: Shall we freeze ?
