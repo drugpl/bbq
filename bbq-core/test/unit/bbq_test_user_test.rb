@@ -44,13 +44,6 @@ class BbqTestUserTest < Test::Unit::TestCase
     %w(comment upload moderate).each { |m| assert user.respond_to?(m) }
   end
 
-  def test_implicit_user_eyes
-    @user = TestUser.new
-    @user.visit "/miracle"
-    assert_raises(FAILED_ASSERTION) { @user.see!("BBQ") }
-    assert_raises(FAILED_ASSERTION) { @user.not_see!("MIRACLE") }
-  end
-
   def test_explicit_user_eyes
     @user = TestUser.new
     @user.visit "/miracle"

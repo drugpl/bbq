@@ -1,9 +1,6 @@
 # Configure Rails Environment
 ENV["RAILS_ENV"] = "test"
 
-require 'test/unit'
-FAILED_ASSERTION = RUBY_VERSION < "1.9" ? Test::Unit::AssertionFailedError : MiniTest::Assertion
-
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require "rails/test_help"
 require "rails/generators/test_case"
