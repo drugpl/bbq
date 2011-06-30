@@ -27,13 +27,21 @@ module Bbq
     end
 
     def page
-      Capybara.using_session(session_name) do
-        Capybara.current_session
+      Capybara.using_driver(current_driver) do
+        Capybara.using_session(session_name) do
+          Capybara.current_session
+        end
       end
     end
 
+    # Discuss: Shall we freeze ?
     def session_name
       @session_name ||= ActiveSupport::SecureRandom.hex(8)
+    end
+
+    # Discuss: Shall we freeze ?
+    def current_driver
+      @current_driver
     end
 
     def roles(*names)
