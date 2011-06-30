@@ -60,4 +60,26 @@ class BbqRspecTest < Test::Unit::TestCase
     run_cmd 'rspec -Itest/dummy/spec test/dummy/spec/acceptance/bbq_matchers_spec.rb'
     assert_match /1 example, 0 failures/, output
   end
+
+  def test_implicit_user_eyes
+    create_file 'test/dummy/spec/acceptance/implicit_user_eyes_spec.rb', <<-RSPEC
+      require 'spec_helper'
+      require 'bbq/rspec'
+
+      feature 'implicit user eyes' do
+        scenario 'should see welcome text' do
+          user = Bbq::TestUser.new
+          user.visit "/miracle"
+          user.see!("MIRACLE")
+          user.not_see!("BBQ")
+
+          lambda { user.see!("BBQ") }.should raise_error
+          lambda { user.not_see!("MIRACLE") }.should raise_error
+        end
+      end
+    RSPEC
+
+    run_cmd 'rspec -Itest/dummy/spec test/dummy/spec/acceptance/bbq_matchers_spec.rb'
+    assert_match /1 example, 0 failures/, output
+  end
 end
