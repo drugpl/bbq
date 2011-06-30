@@ -79,7 +79,7 @@ class BbqRspecTest < Test::Unit::TestCase
       end
     RSPEC
 
-    run_cmd 'rspec -Itest/dummy/spec test/dummy/spec/acceptance/bbq_matchers_spec.rb'
+    run_cmd 'rspec -Itest/dummy/spec test/dummy/spec/acceptance/implicit_user_eyes_spec.rb'
     assert_match /1 example, 0 failures/, output
   end
 end
