@@ -27,6 +27,11 @@ class BbqTestUserTest < Test::Unit::TestCase
     end
   end
 
+  def test_driver_option
+    user = TestUser.new(:driver => :selenium)
+    assert_equal :selenium, user.page.mode
+  end
+
   def test_roles
     user = TestUser.new
     %w(comment upload moderate).each { |m| assert !user.respond_to?(m) }
