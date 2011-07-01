@@ -18,23 +18,23 @@ if defined?(Devise)
 
       def register
         initialize_devise
-        visit send("new_#{self.scope}_registration_path")
-        fill_in "#{self.scope}_#{self.devise_authentication_key}", :with => @email
-        fill_in "#{self.scope}_password", :with => @password
-        fill_in "#{self.scope}_password_confirmation", :with => @password
+        visit send("new_#{scope}_registration_path")
+        fill_in "#{scope}_#{devise_authentication_key}", :with => @email
+        fill_in "#{scope}_password", :with => @password
+        fill_in "#{scope}_password_confirmation", :with => @password
         find(:xpath, "//input[@name='commit']").click
       end
 
       def login
         initialize_devise
-        visit send("new_#{self.scope}_session_path")
-        fill_in "#{self.scope}_#{self.devise_authentication_key}", :with => @email
-        fill_in "#{self.scope}_password", :with => @password
+        visit send("new_#{scope}_session_path")
+        fill_in "#{scope}_#{devise_authentication_key}", :with => @email
+        fill_in "#{scope}_password", :with => @password
         find(:xpath, "//input[@name='commit']").click
       end
 
       def logout
-        visit send("destroy_#{self.scope}_session_path")
+        visit send("destroy_#{scope}_session_path")
       end
 
       def register_and_login
