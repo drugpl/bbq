@@ -4,9 +4,7 @@ require 'securerandom'
 require 'bbq/util'
 
 module Bbq
-
   class TestUser
-
     include ActionDispatch::Routing::UrlFor
     include Rails.application.routes.url_helpers
     include ActionDispatch::Routing::RouteSet::MountedHelpers unless Rails.version < "3.1"
@@ -14,18 +12,10 @@ module Bbq
 
     attr_reader :options
 
-    class << self
-      attr_accessor :callbacks
-    end
-
     def initialize(options = {})
       @session_name = options.delete(:session_name)
       @current_driver = options.delete(:driver)
       @options = options
-
-      self.class.callbacks && self.class.callbacks.each do |callback|
-        callback[:extension].send(callback[:method], self)
-      end
     end
 
     def page
@@ -53,11 +43,6 @@ module Bbq
       end
     end
 
-    def self.add_callback(extension, method=:init)
-      self.callbacks ||= []
-      self.callbacks << {:extension => extension, :method => method}
-    end
-
     def see?(*args)
       args.all? { |arg| has_content?(arg) }
     end
@@ -65,7 +50,5 @@ module Bbq
     def not_see?(*args)
       args.all? { |arg| has_no_content?(arg) }
     end
-
   end
-
 end
