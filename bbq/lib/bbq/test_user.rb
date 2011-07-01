@@ -4,9 +4,7 @@ require 'securerandom'
 require 'bbq/util'
 
 module Bbq
-
   class TestUser
-
     include ActionDispatch::Routing::UrlFor
     include Rails.application.routes.url_helpers
     include Capybara::DSL
@@ -51,7 +49,5 @@ module Bbq
     def not_see?(*args)
       args.all? { |arg| has_no_content?(arg) }
     end
-
   end
-
 end

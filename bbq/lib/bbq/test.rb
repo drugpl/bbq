@@ -4,7 +4,6 @@ require 'bbq/test_user'
 require 'test/unit/assertions'
 
 module Bbq
-
   class TestCase < ActiveSupport::TestCase
     class << self
       alias :scenario :test
@@ -16,7 +15,6 @@ module Bbq
 
   # test/unit specific methods for test_user
   class TestUser
-
     include Test::Unit::Assertions
 
     def see!(*args)
@@ -30,7 +28,5 @@ module Bbq
         assert has_no_content?(arg), "Found \"#{arg}\", which was unexpected."
       end
     end
-
   end
-
 end
