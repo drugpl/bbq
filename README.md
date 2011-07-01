@@ -87,29 +87,88 @@ Examples
 ========
 
 ```ruby
-test "admin can browse all user tickets" do
-  summaries = ["Forgot my password", "Page is not displayed correctly"]
-  descriptions = ["I lost my yellow note with password under the table!",
-                  "My IE renders crap instead of crispy fonts!"]
+module Roundtrip
+  class TestUser < Bbq::TestUser
+    include Bbq::Devise
 
-  alice = Roundtrip::TestUser.new
-  alice.extend(Roundtrip::TestUser::TicketReporter)
-  alice.register_and_login
-  alice.open_ticket(summaries.first, descriptions.first)
+    def update_ticket(summary, comment)
+      show_ticket(summary)
+      fill_in  "Comment", :with => comment
+      click_on "Add update"
+    end
 
-  bob = Roundtrip::TestUser.new
-  bob.extend(Roundtrip::TestUser::TicketReporter)
-  bob.register_and_login
-  bob.open_ticket(summaries.second, descriptions.second)
+    module TicketReporter
+      def open_tickets_listing
+        visit tickets_path
+      end
 
-  bofh = Roundtrip::TestUser.new(:email => @admin.email)
-  bofh.extend(Roundtrip::TestUser::TicketManager)
-  bofh.login
-  bofh.visit "/support/admin/tickets"
-  assert bofh.see?(*summaries)
-  bofh.click_on(summaries.second)
-  assert bofh.see?(summaries.second, descriptions.second)
-  assert bofh.not_see?(summaries.first, descriptions.first)
+      def open_ticket(summary, description)
+        open_tickets_listing
+        click_on "Open a new ticket"
+        fill_in  "Summary", :with => summary
+        fill_in  "Description", :with => description
+        click_on "Open ticket"
+      end
+
+      def show_ticket(summary)
+        open_tickets_listing
+        click_on summary
+      end
+    end
+
+    module TicketManager
+      def open_tickets_listing
+        visit admin_tickets_path
+      end
+
+      def close_ticket(summary, comment = nil)
+        open_tickets_listing
+        click_on summary
+        fill_in  "Comment", :with => comment if comment
+        click_on "Close ticket"
+      end
+
+      def show_ticket(summary)
+        open_tickets_listing
+        click_on summary
+      end
+    end
+  end
+end
+```
+
+```ruby
+class AdminTicketsTest < Bbq::TestCase
+  background do
+    admin = Factory(:admin)
+    @email, @password = admin.email, admin.password
+  end
+
+  scenario "admin can browse all user tickets" do
+    summaries    = ["Forgot my password", "Page is not displayed correctly"]
+    descriptions = ["I lost my yellow note with password under the table!",
+                    "My IE renders crap instead of crispy fonts!"]
+
+    alice = Roundtrip::TestUser.new
+    alice.roles(:ticket_reporter)
+    alice.register_and_login
+    alice.open_ticket(summaries.first, descriptions.first)
+
+    bob = Roundtrip::TestUser.new
+    bob.roles(:ticket_reporter)
+    bob.register_and_login
+    bob.open_ticket(summaries.second, descriptions.second)
+
+    charlie = Roundtrip::TestUser.new(:email => @email, :password => @password)
+    charlie.login # charlie was already "registered" in factory as admin
+    charlie.roles(:ticket_manager)
+    charlie.open_tickets_listing
+    charlie.see!(*summaries)
+
+    charlie.click_on(summaries.second)
+    charlie.see!(summaries.second, descriptions.second)
+    charlie.not_see!(summaries.first, descriptions.first)
+  end
 end
 ```
 
