@@ -6,18 +6,18 @@ if defined?(Devise)
 
       attr_accessor :devise_authentication_key, :email, :password, :scope
 
-      def self.included(other)
-        other.add_callback(self)
-      end
-
-      def self.init(user)
-        user.devise_authentication_key = ::Devise.authentication_keys.first
-        user.email = user.options[user.devise_authentication_key.to_sym] || next_email
-        user.password = user.options[:password] || next_password
-        user.scope = ::Devise.mappings.first.second.singular.to_s
+      def initialize_devise
+        unless @devise_initialized
+          self.devise_authentication_key = ::Devise.authentication_keys.first
+          self.email = options[devise_authentication_key.to_sym] || next_email
+          self.password = options[:password] || next_password
+          self.scope = ::Devise.mappings.first.second.singular.to_s
+          @devise_initialized = true
+        end
       end
 
       def register
+        initialize_devise
         visit send("new_#{self.scope}_registration_path")
         fill_in "#{self.scope}_#{self.devise_authentication_key}", :with => @email
         fill_in "#{self.scope}_password", :with => @password
@@ -26,6 +26,7 @@ if defined?(Devise)
       end
 
       def login
+        initialize_devise
         visit send("new_#{self.scope}_session_path")
         fill_in "#{self.scope}_#{self.devise_authentication_key}", :with => @email
         fill_in "#{self.scope}_password", :with => @password
@@ -40,11 +41,11 @@ if defined?(Devise)
         register
       end
 
-      def self.next_email
+      def next_email
         "#{SecureRandom.hex(3)}@example.com"
       end
 
-      def self.next_password
+      def next_password
         SecureRandom.hex(8)
       end
     end
