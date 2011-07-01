@@ -74,11 +74,13 @@ Running features
 ================
 
 For Test::Unit flavour:
+
 ```
 rake test:acceptance
 ```
 
 For RSpec flavour:
+
 ```
 spec:acceptance
 ```
@@ -216,12 +218,13 @@ Maintainers
 * Andrzej Krzywda (http://andrzejkrzywda.com)
 * Michał Łomnicki (http://mlomnicki.com)
 * Robert Pankowecki (http://robert.pankowecki.pl)
-* Piotr Niełacny (http://ruby-blog.pl)
 
 Contributors
 ============
 
+* Piotr Niełacny (http://ruby-blog.pl)
 * Peter Suschlik (http://peter.suschlik.de)
+* Jan Dudek (http://jandudek.com)
 
 Future plans
 ============
