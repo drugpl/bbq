@@ -108,7 +108,7 @@ After that TestUser have *login*, *logout*, *register*, *register_and_login* met
 test "user register with devise" do
   user = TestUser.new # or TestUser.new(:email => "email@example.com", :password => "secret")
   user.register_and_login
-  user.see?("Stuff after auth")
+  user.see!("Stuff after auth")
 end
 ```
 
@@ -117,7 +117,7 @@ Development environment
 
 ```
 bundle install
-bundle exec rake test
+bundle exec rake test:acceptance # or spec:acceptance for RSpec flavour
 ```
 
 Additional information
