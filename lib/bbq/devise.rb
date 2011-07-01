@@ -3,7 +3,6 @@ if defined?(Devise)
 
   module Bbq
     module Devise
-
       attr_accessor :devise_authentication_key, :email, :password, :scope
 
       def initialize_devise
