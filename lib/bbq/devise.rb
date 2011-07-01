@@ -8,8 +8,8 @@ if defined?(Devise)
       def initialize_devise
         unless @devise_initialized
           self.devise_authentication_key = ::Devise.authentication_keys.first
-          self.email = options[devise_authentication_key.to_sym] || next_email
-          self.password = options[:password] || next_password
+          self.email = options[devise_authentication_key.to_sym] || Bbq::Devise.next_email
+          self.password = options[:password] || Bbq::Devise.next_password
           self.scope = ::Devise.mappings.first.second.singular.to_s
           @devise_initialized = true
         end
@@ -40,11 +40,11 @@ if defined?(Devise)
         register
       end
 
-      def next_email
+      def self.next_email
         "#{SecureRandom.hex(3)}@example.com"
       end
 
-      def next_password
+      def self.next_password
         SecureRandom.hex(8)
       end
     end
