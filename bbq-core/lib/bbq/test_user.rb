@@ -9,7 +9,7 @@ module Bbq
 
     include ActionDispatch::Routing::UrlFor
     include Rails.application.routes.url_helpers
-    include ActionDispatch::Routing::RouteSet::MountedHelpers
+    include ActionDispatch::Routing::RouteSet::MountedHelpers unless Rails.version < "3.1"
     include Capybara::DSL
 
     attr_reader :options
