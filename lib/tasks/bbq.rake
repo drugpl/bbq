@@ -9,7 +9,7 @@ end if File.exists?('test/acceptance')
 begin
   require 'rspec/core/rake_task'
   RSpec::Core::RakeTask.new('spec:acceptance') do |spec|
-    spec.pattern = FileList['spec/acceptance/*_spec.rb']
+    spec.pattern = FileList['spec/acceptance/**/*_spec.rb']
   end if File.exists?('spec/acceptance')
 rescue LoadError
 end
