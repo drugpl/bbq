@@ -28,6 +28,10 @@ Example applications
 ====================
 
 * https://github.com/pawelpacana/roundtrip
+
+Related examples
+================
+
 * https://github.com/pawelpacana/eventmachine-bbq-example
 * https://github.com/drugpl/drug-site
 
@@ -47,10 +51,16 @@ Run install generator:
 rails generate bbq:install
 ```
 
-Require BBQ in test/test_helper.rb:
+Require BBQ in test/test_helper.rb (in case of Test::Unit):
 
 ```ruby
 require "bbq/test"
+```
+
+Require BBQ in spec/spec_helper.rb (in case of RSpec):
+
+```ruby
+require "bbq/rspec"
 ```
 
 Feature generator
@@ -58,6 +68,19 @@ Feature generator
 
 ```
 rails g bbq:test MyFeatureName
+```
+
+Running features
+================
+
+For Test::Unit flavour:
+```
+rake test:acceptance
+```
+
+For RSpec flavour:
+```
+spec:acceptance
 ```
 
 Examples
@@ -117,7 +140,7 @@ Development environment
 
 ```
 bundle install
-bundle exec rake test:acceptance # or spec:acceptance for RSpec flavour
+bundle exec rake test
 ```
 
 Additional information
