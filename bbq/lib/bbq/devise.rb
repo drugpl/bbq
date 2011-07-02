@@ -6,12 +6,12 @@ if defined?(Devise)
       attr_accessor :devise_authentication_key, :email, :password, :scope
 
       def initialize_devise
-        unless @devise_initialized
+        @devise_initialized ||= begin
           self.devise_authentication_key = ::Devise.authentication_keys.first
           self.email = options[devise_authentication_key.to_sym] || Bbq::Devise.next_email
           self.password = options[:password] || Bbq::Devise.next_password
           self.scope = ::Devise.mappings.first.second.singular.to_s
-          @devise_initialized = true
+          true
         end
       end
 
