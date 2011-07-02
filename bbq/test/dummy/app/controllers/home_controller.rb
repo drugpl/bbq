@@ -8,4 +8,7 @@ class HomeController < ApplicationController
   def miracle
     render :text => "MIRACLE"
   end
+
+  def ponycorns
+  end
 end
