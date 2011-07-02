@@ -3,6 +3,7 @@ require 'capybara/dsl'
 require 'securerandom'
 require 'bbq/util'
 require 'bbq/test_user/eyes'
+require 'bbq/test_user/within'
 
 module Bbq
   class TestUser
@@ -11,6 +12,7 @@ module Bbq
     include ActionDispatch::Routing::RouteSet::MountedHelpers unless Rails.version < "3.1"
     include Capybara::DSL
     include Bbq::TestUser::Eyes
+    include Bbq::TestUser::Within
 
     attr_reader :options
 
