@@ -16,9 +16,9 @@ module Bbq
       end
 
       def using_within(args)
-        options = args.last.is_a?(Hash) ? args.last : {}
+        options = args.extract_options!
         locator = options.delete(:within)
-        args.pop if options.empty?
+        args.push(options) unless options.empty?
 
         if locator
           within(locator) { yield }

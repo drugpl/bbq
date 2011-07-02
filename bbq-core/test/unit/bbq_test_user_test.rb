@@ -65,6 +65,10 @@ class BbqTestUserTest < Test::Unit::TestCase
     assert_raises Capybara::ElementNotFound do
       @user.fill_in "color", :with => "red", :within => "#new_unicorn"
     end
+
+    assert_nothing_raised do
+      @user.click_link "More ponycorns"
+    end
   end
 
 end
