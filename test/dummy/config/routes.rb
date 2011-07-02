@@ -3,4 +3,5 @@ Dummy::Application.routes.draw do
   root :to => "home#index"
 
   match "/miracle" => "home#miracle"
+  match "/ponycorns" => "home#ponycorns"
 end
