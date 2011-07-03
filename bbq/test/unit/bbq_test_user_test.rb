@@ -51,4 +51,24 @@ class BbqTestUserTest < Test::Unit::TestCase
     assert @user.see?("MIRACLE")
   end
 
+  def test_user_eyes_within_scope
+    @user = TestUser.new
+    @user.visit "/ponycorns"
+    assert @user.see?("Pink", :within => "#unicorns")
+    assert ! @user.see?("Violet", :within => "#unicorns")
+    assert @user.not_see?("Violet", :within => "#unicorns")
+    assert ! @user.not_see?("Pink", :within => "#unicorns")
+
+    assert_nothing_raised do
+      @user.fill_in "color", :with => "red", :within => "#new_pony"
+    end
+    assert_raises Capybara::ElementNotFound do
+      @user.fill_in "color", :with => "red", :within => "#new_unicorn"
+    end
+
+    assert_nothing_raised do
+      @user.click_link "More ponycorns"
+    end
+  end
+
 end

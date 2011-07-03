@@ -2,6 +2,8 @@ require 'capybara/rails'
 require 'capybara/dsl'
 require 'securerandom'
 require 'bbq/util'
+require 'bbq/test_user/eyes'
+require 'bbq/test_user/within'
 
 module Bbq
   class TestUser
@@ -9,6 +11,8 @@ module Bbq
     include Rails.application.routes.url_helpers
     include ActionDispatch::Routing::RouteSet::MountedHelpers unless Rails.version < "3.1"
     include Capybara::DSL
+    include Bbq::TestUser::Eyes
+    include Bbq::TestUser::Within
 
     attr_reader :options
 
@@ -41,14 +45,6 @@ module Bbq
         module_obj = Bbq::Util.find_module(name, self)
         self.extend(module_obj)
       end
-    end
-
-    def see?(*args)
-      args.all? { |arg| has_content?(arg) }
-    end
-
-    def not_see?(*args)
-      args.all? { |arg| has_no_content?(arg) }
     end
   end
 end
