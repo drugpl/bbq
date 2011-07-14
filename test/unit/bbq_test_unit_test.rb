@@ -23,14 +23,12 @@ class BbqTestUnitTest < Test::Unit::TestCase
 
           assert_raises(FAILED_ASSERTION) { user.see!("blah") }
           assert_raises(FAILED_ASSERTION) { user.not_see!("BBQ supports sinatra") }
-
-          assert_equal 3, user.instance_variable_get(:@_assertions)
         end
       end
     TESTCASE
 
     run_cmd 'ruby -Itest/dope -Itest/dope/test test/dope/test/acceptance/root_path_test.rb'
-    assert_match /1 tests, 4 assertions, 0 failures, 0 errors/, output
+    assert_match /1 tests, 3 assertions, 0 failures, 0 errors/, output
   end
 
   def test_dsl
