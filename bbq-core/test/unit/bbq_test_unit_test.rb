@@ -3,6 +3,36 @@ require 'test_helper'
 class BbqTestUnitTest < Test::Unit::TestCase
   include CommandHelper
 
+  def test_sinatra
+    create_file 'test/dope/test/acceptance/root_path_test.rb', <<-TESTCASE
+      require 'app'
+      require 'bbq/test'
+
+      class DopeAppRootTest < Bbq::TestCase
+        FAILED_ASSERTION = RUBY_VERSION < "1.9" ? Test::Unit::AssertionFailedError : MiniTest::Assertion
+
+        background do
+          Capybara.app = ::Dope::App
+        end
+
+        scenario "user see '/' page" do
+          user = Bbq::TestUser.new
+          user.visit "/"
+          user.see!("BBQ supports sinatra")
+          assert user.see?("BBQ supports sinatra")
+
+          assert_raises(FAILED_ASSERTION) { user.see!("blah") }
+          assert_raises(FAILED_ASSERTION) { user.not_see!("BBQ supports sinatra") }
+
+          assert_equal 3, user.instance_variable_get(:@_assertions)
+        end
+      end
+    TESTCASE
+
+    run_cmd 'ruby -Itest/dope -Itest/dope/test test/dope/test/acceptance/root_path_test.rb'
+    assert_match /1 tests, 4 assertions, 0 failures, 0 errors/, output
+  end
+
   def test_dsl
     create_file 'test/dummy/test/acceptance/dsl_test.rb', <<-TESTCASE
       require 'test_helper'
