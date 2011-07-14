@@ -12,7 +12,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
         FAILED_ASSERTION = RUBY_VERSION < "1.9" ? Test::Unit::AssertionFailedError : MiniTest::Assertion
 
         background do
-          Capybara.app = ::Dope::App
+          Bbq.app = ::Dope::App
         end
 
         scenario "user see '/' page" do
