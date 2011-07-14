@@ -9,4 +9,6 @@ test/dummy/log/*.log
 test/dummy/tmp/
 test/dummy/test/acceptance/*
 test/dummy/spec/acceptance/*
+test/dope/test/acceptance/*
+test/dope/spec/acceptance/*
 nbproject/

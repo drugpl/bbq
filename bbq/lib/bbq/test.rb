@@ -1,3 +1,4 @@
+require 'bbq'
 require 'active_support'
 require 'test/unit'
 require 'bbq/test_user'
