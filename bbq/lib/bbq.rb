@@ -8,6 +8,14 @@ module Bbq
   def self.rails?
     defined?(::Rails)
   end
+
+  def self.app
+    Capybara.app
+  end
+
+  def self.app=(new_app)
+    Capybara.app=(new_app)
+  end
 end
 
 require 'bbq/railtie' if Bbq.rails?
