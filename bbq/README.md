@@ -1,7 +1,7 @@
 Warning & disclaimer
 ====================
 
-This gem is currently under development. We're targeting most popular use case - Rails. However the philosophy behind it is not limited to Rails nor web applications in general. There is even example usage with EventMachine. Feel free to modify it for your own needs.
+This gem is currently under development. We're targeting most popular use cases - Rails & Rack applications (ex. Sinatra). However the philosophy behind it is not limited to Rails nor web applications in general. There is even example usage with EventMachine. Feel free to modify it for your own needs.
 
 [![Build Status](https://secure.travis-ci.org/drugpl/bbq.png)](http://travis-ci.org/drugpl/bbq)
 
