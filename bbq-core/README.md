@@ -199,11 +199,11 @@ end
 Caveats
 =======
 
-=== Timeout::Error
+<h2>Timeout::Error</h2>
 
 If you simulate multiple users in your tests and spawn multiple browsers with selenium it might
 be a good idea to use `Mongrel` instead of `Webrick` to create application server.
-We have experienced some problems with `Webrick` that lead to `Timeout::Error`
+We have experienced some problems with `Webrick` that lead to `Timeout::Error` exception
 when user/browser that was inactive for some time (due to other users/browsers
 activities) was requested to execute an action.
 
