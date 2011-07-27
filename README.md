@@ -196,6 +196,36 @@ test "user register with devise" do
 end
 ```
 
+Caveats
+=======
+
+=== Timeout::Error
+
+If you simulate multiple users in your tests and spawn multiple browsers with selenium it might
+be a good idea to use `Mongrel` instead of `Webrick` to create application server.
+We have experienced some problems with `Webrick` that lead to `Timeout::Error`
+when user/browser that was inactive for some time (due to other users/browsers
+activities) was requested to execute an action.
+
+Put this code into a file loaded before running any acceptance scenario like:
+`test/test_helper.rb` or `spec/spec_helper.rb`:
+
+```ruby
+Capybara.server do |app, port|
+  require 'rack/handler/mongrel'
+  Rack::Handler::Mongrel.run(app, :Port => port)
+end
+```
+
+Add `mongrel` to your `Gemfile`:
+
+```ruby
+# In test group if you want it to
+# be used only in tests and not in your development mode
+# ex. when running 'rails s'
+gem 'mongrel', "1.2.0.pre2", :require => false
+```
+
 Development environment
 =======================
 
