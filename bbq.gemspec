@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency "capybara",  "~> 1.0.0"
+  s.add_dependency "capybara", "~> 1.1.1"
 
   s.add_development_dependency "sqlite3",     "~> 1.3.3"
   s.add_development_dependency "rake",        "~> 0.8.7"
