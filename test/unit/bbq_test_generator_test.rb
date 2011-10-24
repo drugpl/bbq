@@ -1,7 +1,7 @@
 require "test_helper"
 require "generators/bbq/test_generator"
 
-class BbqTestGeneratorTest < Rails::Generators::TestCase
+class BbqTestGeneratorTest < ::Rails::Generators::TestCase
   destination Bbq.root.join("tmp")
   setup :prepare_destination
 
