@@ -7,11 +7,6 @@ require 'bbq/test_user/within'
 
 module Bbq
   class TestUser
-    if Bbq.rails?
-      include ActionDispatch::Routing::UrlFor
-      include Rails.application.routes.url_helpers
-      include ActionDispatch::Routing::RouteSet::MountedHelpers unless Rails.version < "3.1"
-    end
     include Capybara::DSL
     include Bbq::TestUser::Eyes
     include Bbq::TestUser::Within
