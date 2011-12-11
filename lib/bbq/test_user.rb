@@ -1,6 +1,7 @@
 require 'capybara/rails' if Bbq.rails?
 require 'capybara/dsl'
 require 'securerandom'
+require 'bbq/session'
 require 'bbq/util'
 require 'bbq/test_user/capybara_dsl'
 require 'bbq/test_user/eyes'
@@ -20,27 +21,15 @@ module Bbq
     attr_reader :options
 
     def initialize(options = {})
-      @session_name = options.delete(:session_name)
-      @current_driver = options.delete(:driver)
-      @options = options
+      defaults = {
+        :pool => Bbq::Session.pool,
+        :driver => ::Capybara.default_driver
+      }
+      @options = defaults.merge(options)
     end
 
     def page
-      Capybara.using_driver(current_driver) do
-        Capybara.using_session(session_name) do
-          Capybara.current_session
-        end
-      end
-    end
-
-    # Discuss: Shall we freeze ?
-    def session_name
-      @session_name ||= SecureRandom.hex(8)
-    end
-
-    # Discuss: Shall we freeze ?
-    def current_driver
-      @current_driver
+      @page ||= options[:session] || Bbq::Session.next(:driver => options[:driver], :pool => options[:pool])
     end
 
     def roles(*names)
