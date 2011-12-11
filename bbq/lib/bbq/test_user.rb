@@ -2,6 +2,7 @@ require 'capybara/rails' if Bbq.rails?
 require 'capybara/dsl'
 require 'securerandom'
 require 'bbq/util'
+require 'bbq/test_user/capybara_dsl'
 require 'bbq/test_user/eyes'
 require 'bbq/test_user/within'
 
@@ -12,7 +13,7 @@ module Bbq
       include Rails.application.routes.url_helpers
       include ActionDispatch::Routing::RouteSet::MountedHelpers unless Rails.version < "3.1"
     end
-    include Capybara::DSL
+    include Bbq::TestUser::CapybaraDsl
     include Bbq::TestUser::Eyes
     include Bbq::TestUser::Within
 
