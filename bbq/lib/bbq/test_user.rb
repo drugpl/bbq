@@ -21,11 +21,14 @@ module Bbq
     attr_reader :options
 
     def initialize(options = {})
-      defaults = {
+      @options = default_options.merge(options)
+    end
+
+    def default_options
+      {
         :pool => Bbq::Session.pool,
         :driver => ::Capybara.default_driver
       }
-      @options = defaults.merge(options)
     end
 
     def page
