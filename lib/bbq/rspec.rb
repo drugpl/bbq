@@ -87,4 +87,8 @@ RSpec.configuration.include Bbq::RSpecFeature, :type => :acceptance
 RSpec.configure do |config|
   config.include Capybara::RSpecMatchers, :type => :acceptance
   config.include Bbq::RSpecMatchers, :type => :acceptance
+
+  config.after :each, :type => :acceptance do
+    Bbq::Session.pool.release
+  end
 end
