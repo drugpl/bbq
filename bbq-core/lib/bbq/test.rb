@@ -12,6 +12,10 @@ module Bbq
     end
 
     alias :background :setup
+
+    teardown do
+      Bbq::Session.pool.release
+    end
   end
 
   # test/unit specific methods for test_user
