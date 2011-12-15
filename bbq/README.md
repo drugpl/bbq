@@ -202,28 +202,18 @@ Caveats
 <h2>Timeout::Error</h2>
 
 If you simulate multiple users in your tests and spawn multiple browsers with selenium it might
-be a good idea to use `Mongrel` instead of `Webrick` to create application server.
-We have experienced some problems with `Webrick` that lead to `Timeout::Error` exception
+be a good idea to use Thin instead of Webrick to create application server.
+We have experienced some problems with Webrick that lead to `Timeout::Error` exception
 when user/browser that was inactive for some time (due to other users/browsers
 activities) was requested to execute an action.
 
-Put this code into a file loaded before running any acceptance scenario like:
-`test/test_helper.rb` or `spec/spec_helper.rb`:
-
-```ruby
-Capybara.server do |app, port|
-  require 'rack/handler/mongrel'
-  Rack::Handler::Mongrel.run(app, :Port => port)
-end
-```
-
-Add `mongrel` to your `Gemfile`:
+Capybara will use Thin instead of Webrick when it's available, so you only need to add Thin to you Gemfile:
 
 ```ruby
 # In test group if you want it to
 # be used only in tests and not in your development mode
 # ex. when running 'rails s'
-gem 'mongrel', "1.2.0.pre2", :require => false
+gem 'thin', :require => false
 ```
 
 Development environment
