@@ -82,4 +82,49 @@ class BbqRspecTest < Test::Unit::TestCase
     run_cmd 'rspec -Itest/dummy/spec test/dummy/spec/acceptance/implicit_user_eyes_spec.rb'
     assert_match /1 example, 0 failures/, output
   end
+
+  def test_session_pool
+    create_file 'test/dummy/spec/acceptance/session_pool_spec.rb', <<-TESTUNIT
+      require 'spec_helper'
+      require 'bbq/rspec'
+      require 'driver_factory'
+
+      Factory = DriverFactory.new
+      Capybara.register_driver :bbq do |app|
+        Factory.get_driver(app)
+      end
+      Capybara.default_driver = :bbq
+
+      feature 'session pool' do
+        scenario 'creates one session' do
+          alice = Bbq::TestUser.new
+          alice.visit "/miracle"
+          assert Factory.drivers_count.should be <= 3
+        end
+
+        scenario 'creates three sessions' do
+          alice  = Bbq::TestUser.new
+          bob    = Bbq::TestUser.new
+          claire = Bbq::TestUser.new
+
+          alice.visit "/miracle"
+          bob.visit "/miracle"
+          claire.visit "/miracle"
+          Factory.drivers_count.should be == 3
+        end
+
+        scenario 'creates two sessions' do
+          alice  = Bbq::TestUser.new
+          bob    = Bbq::TestUser.new
+
+          alice.visit "/miracle"
+          bob.visit "/miracle"
+          Factory.drivers_count.should be <= 3
+        end
+      end
+    TESTUNIT
+
+    run_cmd 'rspec -Itest/dummy/spec -Itest/support test/dummy/spec/acceptance/session_pool_spec.rb'
+    assert_match /3 examples, 0 failures/, output
+  end
 end
