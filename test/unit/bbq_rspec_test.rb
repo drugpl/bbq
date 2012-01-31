@@ -3,6 +3,10 @@ require 'test_helper'
 class BbqRspecTest < Test::Unit::TestCase
   include CommandHelper
 
+  def setup
+    @log_path = 'test/dummy/log/test_driver.log'
+  end
+
   def test_dsl
     create_file 'test/dummy/spec/acceptance/dsl_spec.rb', <<-RSPEC
       require 'spec_helper'
@@ -89,42 +93,81 @@ class BbqRspecTest < Test::Unit::TestCase
       require 'bbq/rspec'
       require 'driver_factory'
 
-      Factory = DriverFactory.new
+      Factory = DriverFactory.new('#{@log_path}')
       Capybara.register_driver :bbq do |app|
         Factory.get_driver(app)
       end
       Capybara.default_driver = :bbq
 
       feature 'session pool' do
-        scenario 'creates one session' do
+        scenario 'alice visits page' do
+          Factory.drivers_clean?.should be_true
           alice = Bbq::TestUser.new
           alice.visit "/miracle"
-          assert Factory.drivers_count.should be <= 3
+          Factory.drivers_clean?.should be_false
         end
 
-        scenario 'creates three sessions' do
-          alice  = Bbq::TestUser.new
-          bob    = Bbq::TestUser.new
-          claire = Bbq::TestUser.new
-
+        scenario 'both and alice visit page' do
+          Factory.drivers_clean?.should be_true
+          alice = Bbq::TestUser.new
+          bob   = Bbq::TestUser.new
           alice.visit "/miracle"
           bob.visit "/miracle"
-          claire.visit "/miracle"
-          Factory.drivers_count.should be == 3
+          Factory.drivers_clean?.should be_false
         end
 
-        scenario 'creates two sessions' do
-          alice  = Bbq::TestUser.new
-          bob    = Bbq::TestUser.new
-
-          alice.visit "/miracle"
+        scenario 'bob visits page' do
+          Factory.drivers_clean?.should be_true
+          bob  = Bbq::TestUser.new
           bob.visit "/miracle"
-          Factory.drivers_count.should be <= 3
+          Factory.drivers_clean?.should be_false
         end
       end
     TESTUNIT
 
     run_cmd 'rspec -Itest/dummy/spec -Itest/support test/dummy/spec/acceptance/session_pool_spec.rb'
     assert_match /3 examples, 0 failures/, output
+    drivers_created = File.readlines(@log_path).size
+    assert_equal 2, drivers_created
+  end
+
+  def test_without_session_pool
+    create_file 'test/dummy/spec/acceptance/without_session_pool_spec.rb', <<-TESTUNIT
+      require 'spec_helper'
+      require 'bbq/test'
+      require 'driver_factory'
+
+      Factory = DriverFactory.new('#{@log_path}')
+      Capybara.register_driver :bbq do |app|
+        Factory.get_driver(app)
+      end
+      Capybara.default_driver = :bbq
+
+      feature 'without session pool' do
+        scenario 'alice visits page' do
+          alice = Bbq::TestUser.new(:pool => false)
+          alice.visit "/miracle"
+        end
+
+        scenario 'both alice and bob visit page' do
+          alice  = Bbq::TestUser.new(:pool => false)
+          bob    = Bbq::TestUser.new(:pool => false)
+
+          alice.visit "/miracle"
+          bob.visit "/miracle"
+        end
+
+        scenario 'bob visits page' do
+          bob  = Bbq::TestUser.new(:pool => false)
+          bob.visit "/miracle"
+        end
+
+      end
+    TESTUNIT
+
+    run_cmd 'rspec -Itest/dummy/spec -Itest/support test/dummy/spec/acceptance/without_session_pool_spec.rb'
+    assert_match /3 examples, 0 failures/, output
+    drivers_created = File.readlines(@log_path).size
+    assert_equal 4, drivers_created
   end
 end

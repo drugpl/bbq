@@ -2,25 +2,43 @@ class DriverFactory
 
   attr_reader :drivers_count
 
-  def initialize
-    @drivers_count = 0
+  def initialize(log_path)
+    @log = File.open(log_path, 'w')
+    @drivers = []
   end
 
-  def get_driver(app, name = :bbq)
-    @drivers_count += 1
-    TestDriver.new(app)
+  def get_driver(app)
+    @log.puts "Driver created"
+    driver = TestDriver.new(app)
+    @drivers << driver
+    driver
+  end
+
+  def drivers_clean?
+    @drivers.all?(&:clean?)
+  end
+
+  def drivers_count
+    @drivers.size
   end
 
   class TestDriver
 
     def initialize(app)
-      @app = app
+      @app   = app
+      @clean = true
     end
 
     def visit(path)
+      @clean = false
     end
 
     def reset!
+      @clean = true
+    end
+
+    def clean?
+      @clean
     end
 
   end
