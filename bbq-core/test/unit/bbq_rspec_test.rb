@@ -88,7 +88,7 @@ class BbqRspecTest < Test::Unit::TestCase
   end
 
   def test_session_pool
-    create_file 'test/dummy/spec/acceptance/session_pool_spec.rb', <<-TESTUNIT
+    create_file 'test/dummy/spec/acceptance/session_pool_spec.rb', <<-RSPEC
       require 'spec_helper'
       require 'bbq/rspec'
       require 'driver_factory'
@@ -123,7 +123,7 @@ class BbqRspecTest < Test::Unit::TestCase
           Factory.drivers_clean?.should be_false
         end
       end
-    TESTUNIT
+    RSPEC
 
     run_cmd 'rspec -Itest/dummy/spec -Itest/support test/dummy/spec/acceptance/session_pool_spec.rb'
     assert_match /3 examples, 0 failures/, output
@@ -132,7 +132,7 @@ class BbqRspecTest < Test::Unit::TestCase
   end
 
   def test_without_session_pool
-    create_file 'test/dummy/spec/acceptance/without_session_pool_spec.rb', <<-TESTUNIT
+    create_file 'test/dummy/spec/acceptance/without_session_pool_spec.rb', <<-RSPEC
       require 'spec_helper'
       require 'bbq/test'
       require 'driver_factory'
@@ -163,7 +163,7 @@ class BbqRspecTest < Test::Unit::TestCase
         end
 
       end
-    TESTUNIT
+    RSPEC
 
     run_cmd 'rspec -Itest/dummy/spec -Itest/support test/dummy/spec/acceptance/without_session_pool_spec.rb'
     assert_match /3 examples, 0 failures/, output
