@@ -80,4 +80,52 @@ class BbqTestUnitTest < Test::Unit::TestCase
     run_cmd 'ruby -Ilib -Itest/dummy/test test/dummy/test/acceptance/implicit_user_eyes_test.rb'
     assert_match /1 tests, 2 assertions, 0 failures, 0 errors/, output
   end
+
+
+  def test_session_pool
+    create_file 'test/dummy/test/acceptance/session_pool_test.rb', <<-TESTUNIT
+      require 'test_helper'
+      require 'bbq/test'
+      require 'driver_factory'
+
+      Factory = DriverFactory.new
+      Capybara.register_driver :bbq do |app|
+        Factory.get_driver(app)
+      end
+      Capybara.default_driver = :bbq
+
+      class SessionPoolTest < Bbq::TestCase
+        scenario 'creates one session' do
+          alice = Bbq::TestUser.new
+          alice.visit "/miracle"
+          assert Factory.drivers_count <= 3
+        end
+
+        scenario 'creates three sessions' do
+          alice  = Bbq::TestUser.new
+          bob    = Bbq::TestUser.new
+          claire = Bbq::TestUser.new
+
+          alice.visit "/miracle"
+          bob.visit "/miracle"
+          claire.visit "/miracle"
+          assert_equal 3, Factory.drivers_count
+        end
+
+        scenario 'creates two sessions' do
+          alice  = Bbq::TestUser.new
+          bob    = Bbq::TestUser.new
+
+          alice.visit "/miracle"
+          bob.visit "/miracle"
+          assert Factory.drivers_count <= 3
+        end
+
+      end
+    TESTUNIT
+
+    run_cmd 'ruby -Ilib -Itest/dummy/test -Itest/support test/dummy/test/acceptance/session_pool_test.rb'
+    assert_match /3 tests, 3 assertions, 0 failures, 0 errors/, output
+  end
+
 end
