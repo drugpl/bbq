@@ -107,7 +107,7 @@ class BbqRspecTest < Test::Unit::TestCase
           Factory.drivers_clean?.should be_false
         end
 
-        scenario 'both and alice visit page' do
+        scenario 'both alice and bob visit page' do
           Factory.drivers_clean?.should be_true
           alice = Bbq::TestUser.new
           bob   = Bbq::TestUser.new
