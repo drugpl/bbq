@@ -99,9 +99,14 @@ module Roundtrip
       click_on "Add update"
     end
 
+    def open_application
+      visit '/'
+    end
+
     module TicketReporter
       def open_tickets_listing
-        visit tickets_path
+        open_application
+        click_link 'Tickets'
       end
 
       def open_ticket(summary, description)
@@ -119,8 +124,13 @@ module Roundtrip
     end
 
     module TicketManager
+      def open_administration
+        visit '/admin'
+      end
+
       def open_tickets_listing
-        visit admin_tickets_path
+        open_administration
+        click_link 'Tickets'
       end
 
       def close_ticket(summary, comment = nil)
@@ -170,6 +180,41 @@ class AdminTicketsTest < Bbq::TestCase
     charlie.click_on(summaries.second)
     charlie.see!(summaries.second, descriptions.second)
     charlie.not_see!(summaries.first, descriptions.first)
+  end
+end
+```
+
+Rails' URL Helpers
+================
+
+Using url helpers from Rails in integration tests is not recommended.
+Testing routes is part of integration test, so you should actually use only
+
+```ruby
+  visit '/'
+```
+
+in your integration test. Use links and buttons in order to get to other pages in your app.
+
+If you really need url helpers in your test user, just include them in your TestUser class:
+
+```ruby
+require 'bbq/rails/routes'
+
+module Roundtrip
+  class TestUser < Bbq::TestUser
+    include Bbq::Rails::Routes
+  end
+end
+```
+or just
+
+```ruby
+module Roundtrip
+  class TestUser < Bbq::TestUser
+    include ::ActionDispatch::Routing::UrlFor
+    include ::Rails.application.routes.url_helpers
+    include ::ActionDispatch::Routing::RouteSet::MountedHelpers unless ::Rails.version < "3.1"
   end
 end
 ```
