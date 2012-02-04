@@ -1,5 +1,6 @@
+require 'bbq'
+require 'bbq/session'
 require 'rspec/core'
-require 'bbq/test_user'
 require 'capybara/rspec/matchers'
 
 module Bbq
