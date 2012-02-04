@@ -1,7 +1,7 @@
 
 To finish setup, place in your test/test_helper.rb the following:
 
-  require 'bbq/test'
+  require 'bbq/test_unit'
 
 Also make sure that you require there support files:
 
