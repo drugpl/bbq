@@ -5,6 +5,11 @@ if defined?(Devise)
     module Devise
       attr_accessor :devise_authentication_key, :email, :password, :scope
 
+      def self.included(klass)
+        require 'bbq/rails/routes'
+        klass.send(:include, Bbq::Rails::Routes)
+      end
+
       def initialize_devise
         @devise_initialized ||= begin
           self.devise_authentication_key = ::Devise.authentication_keys.first
