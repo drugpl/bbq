@@ -1,3 +1,5 @@
+require 'capybara/dsl'
+
 module Bbq
   class TestUser
     module CapybaraDsl
