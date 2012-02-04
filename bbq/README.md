@@ -184,6 +184,32 @@ class AdminTicketsTest < Bbq::TestCase
 end
 ```
 
+Testing REST APIs
+================
+
+Bbq provides `Bbq::TestClient`, similar to `Bbq::TestUser`, but intended for testing APIs.
+It's a thin wrapper around `Rack::Test` which allows you to send requests and run assertions
+against responses.
+
+```ruby
+class ApiTest < Bbq::TestCase
+  background do
+    headers = {'HTTP_ACCEPT' => 'application/json'}
+    @client = TestClient.new(:headers => headers)
+  end
+
+  scenario "admin can browse all user tickets" do
+    @client.get "/unicorn" do |response|
+      assert_equal 200, response.status
+      assert_equal "pink", response.body["unicorn"]["color"]
+    end
+    @client.post "/ponies", { :name => "Miracle" } do |response|
+      assert_equal 200, response.status
+    end
+  end
+end
+```
+
 Rails' URL Helpers
 ================
 
