@@ -119,10 +119,26 @@ class BbqTestUnitTest < Test::Unit::TestCase
             assert_equal true, response.body["wonderful"]
           end
         end
+
+        scenario 'client extended by role gets the rainbow' do
+          class Bbq::TestClient
+            module HappyUnicorn
+              def get_rainbow(*args)
+                get "/rainbow", *args
+              end
+            end
+          end
+
+          client = Bbq::TestClient.new(:headers => { 'HTTP_ACCEPT' => 'application/json' })
+          client.roles(:happy_unicorn)
+          response = client.get_rainbow
+          assert_equal 200, response.status
+          assert_equal 7, response.body["colors"]
+        end
       end
     TESTUNIT
 
     run_cmd 'ruby -Ilib -Itest/dummy/test test/dummy/test/acceptance/api_test.rb'
-    assert_match /3 tests, 12 assertions, 0 failures, 0 errors/, output
+    assert_match /4 tests, 14 assertions, 0 failures, 0 errors/, output
   end
 end

@@ -1,5 +1,9 @@
+require 'bbq/roles'
+
 module Bbq
   class TestClient
+    include Bbq::Roles
+
     attr_reader :options
 
     def initialize(options = {})
