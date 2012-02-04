@@ -35,9 +35,9 @@ module Bbq
 
     def parse_response(rack_response)
       case rack_response.headers["Content-Type"]
-      when /^application\/json/
+      when /^application\/(.*\+)?json/
         rack_response.extend(JsonBody)
-      when /^application\/x-yaml/
+      when /^application\/(.*\+)?x-yaml/
         rack_response.extend(YamlBody)
       else
         rack_response

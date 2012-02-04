@@ -92,6 +92,17 @@ class BbqTestUnitTest < Test::Unit::TestCase
           client = Bbq::TestClient.new(:headers => { 'HTTP_ACCEPT' => 'application/json' })
           client.get "/rainbow" do |response|
             assert_equal 200, response.status
+            assert_match "application/json", response.headers["Content-Type"]
+            assert_equal 7, response.body["colors"]
+            assert_equal true, response.body["wonderful"]
+          end
+        end
+
+        scenario 'client fetches the rainbow as JSON with version' do
+          client = Bbq::TestClient.new(:headers => { 'HTTP_ACCEPT' => 'application/vnd.magic+json; version=2' })
+          client.get "/rainbow" do |response|
+            assert_equal 200, response.status
+            assert_match "application/vnd.magic+json; version=2", response.headers["Content-Type"]
             assert_equal 7, response.body["colors"]
             assert_equal true, response.body["wonderful"]
           end
@@ -101,6 +112,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
           client = Bbq::TestClient.new(:headers => { 'HTTP_ACCEPT' => 'application/x-yaml' })
           client.get "/rainbow" do |response|
             assert_equal 200, response.status
+            assert_match "application/x-yaml", response.headers["Content-Type"]
             assert_equal 7, response.body["colors"]
             assert_equal true, response.body["wonderful"]
           end
@@ -109,6 +121,6 @@ class BbqTestUnitTest < Test::Unit::TestCase
     TESTUNIT
 
     run_cmd 'ruby -Ilib -Itest/dummy/test test/dummy/test/acceptance/api_test.rb'
-    assert_match /2 tests, 6 assertions, 0 failures, 0 errors/, output
+    assert_match /3 tests, 12 assertions, 0 failures, 0 errors/, output
   end
 end
