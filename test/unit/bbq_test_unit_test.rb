@@ -88,8 +88,17 @@ class BbqTestUnitTest < Test::Unit::TestCase
       require 'bbq/test_client'
 
       class ApiTest < Bbq::TestCase
-        scenario 'client fetches the rainbow' do
+        scenario 'client fetches the rainbow as JSON' do
           client = Bbq::TestClient.new(:headers => { 'HTTP_ACCEPT' => 'application/json' })
+          client.get "/rainbow" do |response|
+            assert_equal 200, response.status
+            assert_equal 7, response.body["colors"]
+            assert_equal true, response.body["wonderful"]
+          end
+        end
+
+        scenario 'client fetches the rainbow as YAML' do
+          client = Bbq::TestClient.new(:headers => { 'HTTP_ACCEPT' => 'application/x-yaml' })
           client.get "/rainbow" do |response|
             assert_equal 200, response.status
             assert_equal 7, response.body["colors"]
@@ -100,6 +109,6 @@ class BbqTestUnitTest < Test::Unit::TestCase
     TESTUNIT
 
     run_cmd 'ruby -Ilib -Itest/dummy/test test/dummy/test/acceptance/api_test.rb'
-    assert_match /1 tests, 3 assertions, 0 failures, 0 errors/, output
+    assert_match /2 tests, 6 assertions, 0 failures, 0 errors/, output
   end
 end

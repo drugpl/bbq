@@ -11,7 +11,8 @@ module Bbq
     HTTP_METHODS.each do |method|
       class_eval <<-RUBY
         def #{method}(path, params = {}, headers = {})
-          response = JsonResponse.new(testing_tool.send(:#{method}, path, params, default_headers.merge(headers)))
+          rack_response = testing_tool.send(:#{method}, path, params, default_headers.merge(headers))
+          response = parse_response(rack_response)
           yield response if block_given?
           response
         end
@@ -32,6 +33,17 @@ module Bbq
       @testing_tool ||= RackTest.new(app)
     end
 
+    def parse_response(rack_response)
+      case rack_response.headers["Content-Type"]
+      when /^application\/json/
+        rack_response.extend(JsonBody)
+      when /^application\/x-yaml/
+        rack_response.extend(YamlBody)
+      else
+        rack_response
+      end
+    end
+
     class RackTest
       attr_accessor :app
 
@@ -42,19 +54,15 @@ module Bbq
       include Rack::Test::Methods
     end
 
-    class JsonResponse
-      attr_reader :status, :headers, :response
-
-      def initialize(response)
-        @response = response
-        @status   = response.status
-        @headers  = response.headers
-      end
-
+    module JsonBody
       def body
-        @body ||= begin
-          @response.body.empty?? @response.body : JSON.parse(@response.body)
-        end
+        @parsed_body ||= super.empty?? super : JSON.parse(super)
+      end
+    end
+
+    module YamlBody
+      def body
+        @parsed_body ||= YAML.load(super)
       end
     end
   end
