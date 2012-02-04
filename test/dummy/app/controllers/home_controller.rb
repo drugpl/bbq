@@ -11,4 +11,11 @@ class HomeController < ApplicationController
 
   def ponycorns
   end
+
+  def rainbow
+    @rainbow = { :wonderful => true, :colors => 7 }
+    respond_to do |format|
+      format.json { render :json => @rainbow }
+    end
+  end
 end

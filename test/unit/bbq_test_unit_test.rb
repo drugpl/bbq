@@ -80,4 +80,26 @@ class BbqTestUnitTest < Test::Unit::TestCase
     run_cmd 'ruby -Ilib -Itest/dummy/test test/dummy/test/acceptance/implicit_user_eyes_test.rb'
     assert_match /1 tests, 2 assertions, 0 failures, 0 errors/, output
   end
+
+  def test_api_client
+    create_file 'test/dummy/test/acceptance/api_test.rb', <<-TESTUNIT
+      require 'test_helper'
+      require 'bbq/test'
+      require 'bbq/test_client'
+
+      class ApiTest < Bbq::TestCase
+        scenario 'client fetches the rainbow' do
+          client = Bbq::TestClient.new(:headers => { 'HTTP_ACCEPT' => 'application/json' })
+          client.get "/rainbow" do |response|
+            assert_equal 200, response.status
+            assert_equal 7, response.body["colors"]
+            assert_equal true, response.body["wonderful"]
+          end
+        end
+      end
+    TESTUNIT
+
+    run_cmd 'ruby -Ilib -Itest/dummy/test test/dummy/test/acceptance/api_test.rb'
+    assert_match /1 tests, 3 assertions, 0 failures, 0 errors/, output
+  end
 end
