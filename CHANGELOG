@@ -5,6 +5,9 @@
   * Include only Capybara::Session::DSL_METHODS in TestUser, not the whole Capybara::DSL
   * Added Capybara sessions pool
   * Moved Test::User default options to separate method
+  * Added Test::Client for testing REST APIs
+  * Renamed bbq/test.rb to bbq/test_unit.rb. You may want to fix your test_helper.
+  * Moved require bbq/test_user to generated test_user.rb. You may want to update your existing test_user.rb.
 
 0.0.4 / 2011-10-19
 ==================
