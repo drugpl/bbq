@@ -1,12 +1,31 @@
-0.0.3
+0.1.0
+==================
 
-* Added support and tests for Sinatra
-* Added Bbq.app and Bbq.app=
+  * Extracted Rails' URL helpers inclusion to separate module
+  * Include only Capybara::Session::DSL_METHODS in TestUser, not the whole Capybara::DSL
+  * Added Capybara sessions pool
+  * Moved Test::User default options to separate method
 
-0.0.2
+0.0.4 / 2011-10-19
+==================
 
-* ...
+  * Make bbq work with capybara 1.0 and 1.1
+  * rails is development dependency
 
-0.0.1
+0.0.3 / 2011-07-14
+==================
 
-* ...
+  * Added support and tests for Sinatra
+  * Added Bbq.app and Bbq.app=
+
+0.0.2 / 2011-07-01
+==================
+
+  * Extracted Bbq::TestUser::Eyes module
+  * Added :within option to TestUser methods
+  * Fix tests for ree and ruby187
+
+0.0.1 / 2011-04-20
+==================
+
+  * BBQ introduced to the wild world!
