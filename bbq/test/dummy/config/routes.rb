@@ -4,4 +4,5 @@ Dummy::Application.routes.draw do
 
   match "/miracle" => "home#miracle"
   match "/ponycorns" => "home#ponycorns"
+  match "/rainbow" => "home#rainbow"
 end
