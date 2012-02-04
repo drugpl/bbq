@@ -1,6 +1,5 @@
 require 'capybara/rails' if Bbq.rails?
 require 'capybara/dsl'
-require 'securerandom'
 require 'bbq/session'
 require 'bbq/util'
 require 'bbq/test_user/capybara_dsl'
