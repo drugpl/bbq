@@ -82,4 +82,27 @@ class BbqRspecTest < Test::Unit::TestCase
     run_cmd 'rspec -Itest/dummy/spec test/dummy/spec/acceptance/implicit_user_eyes_spec.rb'
     assert_match /1 example, 0 failures/, output
   end
+
+  def test_api_client
+    create_file 'test/dummy/spec/acceptance/api_spec.rb', <<-RSPEC
+      require 'spec_helper'
+      require 'bbq/rspec'
+      require 'bbq/test_client'
+
+      feature 'application API' do
+        scenario 'client fetches the rainbow as JSON' do
+          client = Bbq::TestClient.new(:headers => { 'HTTP_ACCEPT' => 'application/json' })
+          client.get "/rainbow" do |response|
+            response.status.should == 200
+            response.headers["Content-Type"].should match "application/json"
+            response.body["colors"].should == 7
+            response.body["wonderful"].should == true
+          end
+        end
+      end
+    RSPEC
+
+    run_cmd 'rspec -Itest/dummy/spec test/dummy/spec/acceptance/implicit_user_eyes_spec.rb'
+    assert_match /1 example, 0 failures/, output
+  end
 end
