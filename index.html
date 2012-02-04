@@ -1,0 +1,102 @@
+---
+layout: doc
+title: BBQ
+---
+
+<div class="hero-unit">
+  <h1>BBQ</h1>
+  <p>
+  Object oriented acceptance testing using actors.
+  </p>
+</div>
+
+<div class="row">
+  <div class="span4">
+    <h2>Awesome</h2>
+    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+  </div>
+
+  <div class="span4">
+    <h2>Amazing</h2>
+    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+  </div>
+
+  <div class="span4">
+    <h2>Automagic</h2>
+    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+  </div>
+</div>
+
+<ul class="quick-links">
+  <li><a href="https://github.com/drugpl/bbq/Changelog">Changelog</a></li>
+  <li><a href="https://github.com/drugpl/bbq/issues?state=open">Issues</a></li>
+  <li><a href="https://github.com/drugpl/bbq/contributors">Contributors</a></li>
+  <li>
+  <li class="divider">&middot;</li>
+  <iframe class="github-btn" src="http://markdotto.github.com/github-buttons/github-btn.html?user=drugpl&repo=bbq&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="94px" height="20px"></iframe>
+  </li>
+  <li>
+  <iframe class="github-btn" src="http://markdotto.github.com/github-buttons/github-btn.html?user=drugpl&repo=bbq&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="94px" height="20px"></iframe>
+  </li>
+  <li class="divider">&middot;</li>
+  <li class="tweet-btn">
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://drugl.github.com/bbq/" data-count="horizontal" data-via="drugpl">Tweet</a>
+  </li>
+</ul>
+
+<div class="page-header">
+  <h1 id="install">Install</h1>
+</div>
+
+{% highlight ruby lineos %}
+
+class AdminTicketsTest < Bbq::TestCase
+  background do
+    admin = Factory(:admin)
+    @email, @password = admin.email, admin.password
+  end
+
+  scenario "admin can browse all user tickets" do
+    summaries    = ["Forgot my password", "Page is not displayed correctly"]
+    descriptions = ["I lost my yellow note with password under the table!",
+                    "My IE renders crap instead of crispy fonts!"]
+
+    alice = Roundtrip::TestUser.new
+    alice.roles(:ticket_reporter)
+    alice.register_and_login
+    alice.open_ticket(summaries.first, descriptions.first)
+
+    bob = Roundtrip::TestUser.new
+    bob.roles(:ticket_reporter)
+    bob.register_and_login
+    bob.open_ticket(summaries.second, descriptions.second)
+
+    charlie = Roundtrip::TestUser.new(:email => @email, :password => @password)
+    charlie.login # charlie was already "registered" in factory as admin
+    charlie.roles(:ticket_manager)
+    charlie.open_tickets_listing
+    charlie.see!(*summaries)
+
+    charlie.click_on(summaries.second)
+    charlie.see!(summaries.second, descriptions.second)
+    charlie.not_see!(summaries.first, descriptions.first)
+  end
+end
+
+{% endhighlight %}
+
+<div class="page-header">
+  <h1 id="examples">Examples</h1>
+</div>
+
+{% highlight ruby lineos %}
+  TODO
+{% endhighlight %}
+
+<div class="page-header">
+  <h1 id="customize">Customize</h1>
+</div>
+
+{% highlight ruby lineos %}
+  TODO: mail_inbox, test client, widgets...
+{% endhighlight %}

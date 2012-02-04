@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/pygments.css">
+    <link href='http://fonts.googleapis.com/css?family=Days+One' rel='stylesheet' type='text/css'>
+  </head>
+  <body data-spy="scroll" data-offset="50" id="start">
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#start">Overview</a></li>
+              <li><a href="#install">Install</a></li>
+              <li><a href="#examples">Examples</a></li>
+              <li><a href="#customize">Customize</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+<div class="hero-unit">
+  <h1>BBQ</h1>
+  <p>
+  Object oriented acceptance testing using actors.
+  </p>
+</div>
+
+<div class="row">
+  <div class="span4">
+    <h2>Awesome</h2>
+    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+  </div>
+
+  <div class="span4">
+    <h2>Amazing</h2>
+    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+  </div>
+
+  <div class="span4">
+    <h2>Automagic</h2>
+    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+  </div>
+</div>
+
+<ul class="quick-links">
+  <li><a href="https://github.com/drugpl/bbq/Changelog">Changelog</a></li>
+  <li><a href="https://github.com/drugpl/bbq/issues?state=open">Issues</a></li>
+  <li><a href="https://github.com/drugpl/bbq/contributors">Contributors</a></li>
+  <li>
+  <li class="divider">&middot;</li>
+  <iframe class="github-btn" src="http://markdotto.github.com/github-buttons/github-btn.html?user=drugpl&repo=bbq&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="94px" height="20px"></iframe>
+  </li>
+  <li>
+  <iframe class="github-btn" src="http://markdotto.github.com/github-buttons/github-btn.html?user=drugpl&repo=bbq&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="94px" height="20px"></iframe>
+  </li>
+  <li class="divider">&middot;</li>
+  <li class="tweet-btn">
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://drugl.github.com/bbq/" data-count="horizontal" data-via="drugpl">Tweet</a>
+  </li>
+</ul>
+
+<div class="page-header">
+  <h1 id="install">Install</h1>
+</div>
+
+<div class="highlight"><pre><code class="ruby"><span class="k">class</span> <span class="nc">AdminTicketsTest</span> <span class="o">&lt;</span> <span class="no">Bbq</span><span class="o">::</span><span class="no">TestCase</span>
+  <span class="n">background</span> <span class="k">do</span>
+    <span class="n">admin</span> <span class="o">=</span> <span class="no">Factory</span><span class="p">(</span><span class="ss">:admin</span><span class="p">)</span>
+    <span class="vi">@email</span><span class="p">,</span> <span class="vi">@password</span> <span class="o">=</span> <span class="n">admin</span><span class="o">.</span><span class="n">email</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">password</span>
+  <span class="k">end</span>
+
+  <span class="n">scenario</span> <span class="s2">&quot;admin can browse all user tickets&quot;</span> <span class="k">do</span>
+    <span class="n">summaries</span>    <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;Forgot my password&quot;</span><span class="p">,</span> <span class="s2">&quot;Page is not displayed correctly&quot;</span><span class="o">]</span>
+    <span class="n">descriptions</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;I lost my yellow note with password under the table!&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;My IE renders crap instead of crispy fonts!&quot;</span><span class="o">]</span>
+
+    <span class="n">alice</span> <span class="o">=</span> <span class="no">Roundtrip</span><span class="o">::</span><span class="no">TestUser</span><span class="o">.</span><span class="n">new</span>
+    <span class="n">alice</span><span class="o">.</span><span class="n">roles</span><span class="p">(</span><span class="ss">:ticket_reporter</span><span class="p">)</span>
+    <span class="n">alice</span><span class="o">.</span><span class="n">register_and_login</span>
+    <span class="n">alice</span><span class="o">.</span><span class="n">open_ticket</span><span class="p">(</span><span class="n">summaries</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">descriptions</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+
+    <span class="n">bob</span> <span class="o">=</span> <span class="no">Roundtrip</span><span class="o">::</span><span class="no">TestUser</span><span class="o">.</span><span class="n">new</span>
+    <span class="n">bob</span><span class="o">.</span><span class="n">roles</span><span class="p">(</span><span class="ss">:ticket_reporter</span><span class="p">)</span>
+    <span class="n">bob</span><span class="o">.</span><span class="n">register_and_login</span>
+    <span class="n">bob</span><span class="o">.</span><span class="n">open_ticket</span><span class="p">(</span><span class="n">summaries</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="n">descriptions</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
+
+    <span class="n">charlie</span> <span class="o">=</span> <span class="no">Roundtrip</span><span class="o">::</span><span class="no">TestUser</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:email</span> <span class="o">=&gt;</span> <span class="vi">@email</span><span class="p">,</span> <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="vi">@password</span><span class="p">)</span>
+    <span class="n">charlie</span><span class="o">.</span><span class="n">login</span> <span class="c1"># charlie was already &quot;registered&quot; in factory as admin</span>
+    <span class="n">charlie</span><span class="o">.</span><span class="n">roles</span><span class="p">(</span><span class="ss">:ticket_manager</span><span class="p">)</span>
+    <span class="n">charlie</span><span class="o">.</span><span class="n">open_tickets_listing</span>
+    <span class="n">charlie</span><span class="o">.</span><span class="n">see!</span><span class="p">(</span><span class="o">*</span><span class="n">summaries</span><span class="p">)</span>
+
+    <span class="n">charlie</span><span class="o">.</span><span class="n">click_on</span><span class="p">(</span><span class="n">summaries</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
+    <span class="n">charlie</span><span class="o">.</span><span class="n">see!</span><span class="p">(</span><span class="n">summaries</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="n">descriptions</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
+    <span class="n">charlie</span><span class="o">.</span><span class="n">not_see!</span><span class="p">(</span><span class="n">summaries</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">descriptions</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+
+<div class="page-header">
+  <h1 id="examples">Examples</h1>
+</div>
+
+<div class="highlight"><pre><code class="ruby">  <span class="no">TODO</span>
+</code></pre>
+</div>
+
+
+<div class="page-header">
+  <h1 id="customize">Customize</h1>
+</div>
+
+<div class="highlight"><pre><code class="ruby">  <span class="no">TODO</span><span class="p">:</span> <span class="n">mail_inbox</span><span class="p">,</span> <span class="nb">test</span> <span class="n">client</span><span class="p">,</span> <span class="n">widgets</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</code></pre>
+</div>
+
+
+      <hr>
+      <footer>
+      <p>hackathon driven development by <a href="http://drug.org.pl">DRUG</a></p>
+      </footer>
+
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+      <script src="bootstrap-scrollspy.js"></script>
+    </div>
+  </body>
+</html>
+

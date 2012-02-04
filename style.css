@@ -1,0 +1,44 @@
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+
+.hero-unit p {
+  font-size: 200%;
+}
+
+.hero-unit h1 {
+  font-family: 'Days One'
+}
+
+.quick-links {
+  min-height: 30px;
+  padding: 5px 20px;
+  margin: 25px 0;
+  list-style: none;
+  text-align: center;
+  overflow: hidden;
+}
+.quick-links li {
+  display: inline;
+  margin: 0 5px;
+  color: #999;
+}
+.quick-links .github-btn,
+.quick-links .tweet-btn,
+.quick-links .follow-btn {
+  position: relative;
+  top: 5px;
+}
+
+pre {
+  background-color: #222;
+}
+
+pre code {
+  background-color: transparent;
+  color: #404040;
+  padding: 0;
+  border: 0;
+}
+
