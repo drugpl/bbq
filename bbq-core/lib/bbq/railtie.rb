@@ -2,6 +2,10 @@ require 'rails/generators'
 
 module Bbq
   class Railtie < Rails::Railtie
+    initializer "bqq.set_app" do
+      Bbq.app = Rails.application
+    end
+
     rake_tasks do
       load Bbq.root.join("lib/tasks/bbq.rake")
     end
