@@ -1,6 +1,6 @@
 require 'capybara/rails' if Bbq.rails?
 require 'bbq/session'
-require 'bbq/util'
+require 'bbq/roles'
 require 'bbq/test_user/capybara_dsl'
 require 'bbq/test_user/eyes'
 require 'bbq/test_user/within'
@@ -10,6 +10,7 @@ module Bbq
     include Bbq::TestUser::CapybaraDsl
     include Bbq::TestUser::Eyes
     include Bbq::TestUser::Within
+    include Bbq::Roles
 
     attr_reader :options
 
@@ -26,13 +27,6 @@ module Bbq
 
     def page
       @page ||= options[:session] || Bbq::Session.next(:driver => options[:driver], :pool => options[:pool])
-    end
-
-    def roles(*names)
-      names.each do |name|
-        module_obj = Bbq::Util.find_module(name, self)
-        self.extend(module_obj)
-      end
     end
   end
 end
