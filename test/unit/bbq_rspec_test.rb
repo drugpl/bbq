@@ -27,6 +27,7 @@ class BbqRspecTest < Test::Unit::TestCase
     create_file 'test/dummy/spec/acceptance/capybara_matchers_spec.rb', <<-RSPEC
       require 'spec_helper'
       require 'bbq/rspec'
+      require 'bbq/test_user'
 
       feature 'capybara matchers' do
         scenario 'should see welcome text' do
@@ -46,6 +47,7 @@ class BbqRspecTest < Test::Unit::TestCase
     create_file 'test/dummy/spec/acceptance/bbq_matchers_spec.rb', <<-RSPEC
       require 'spec_helper'
       require 'bbq/rspec'
+      require 'bbq/test_user'
 
       feature 'bbq matchers' do
         scenario 'should see welcome text' do
@@ -65,6 +67,7 @@ class BbqRspecTest < Test::Unit::TestCase
     create_file 'test/dummy/spec/acceptance/implicit_user_eyes_spec.rb', <<-RSPEC
       require 'spec_helper'
       require 'bbq/rspec'
+      require 'bbq/test_user'
 
       feature 'implicit user eyes' do
         scenario 'should see welcome text' do

@@ -7,6 +7,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
     create_file 'test/dope/test/acceptance/root_path_test.rb', <<-TESTCASE
       require 'app'
       require 'bbq/test_unit'
+      require 'bbq/test_user'
 
       class DopeAppRootTest < Bbq::TestCase
         FAILED_ASSERTION = RUBY_VERSION < "1.9" ? Test::Unit::AssertionFailedError : MiniTest::Assertion
@@ -61,6 +62,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
     create_file 'test/dummy/test/acceptance/implicit_user_eyes_test.rb', <<-TESTUNIT
       require 'test_helper'
       require 'bbq/test_unit'
+      require 'bbq/test_user'
 
       FAILED_ASSERTION = RUBY_VERSION < "1.9" ? Test::Unit::AssertionFailedError : MiniTest::Assertion
 

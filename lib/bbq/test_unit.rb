@@ -1,7 +1,7 @@
 require 'bbq'
+require 'bbq/session'
 require 'active_support'
 require 'test/unit'
-require 'bbq/test_user'
 require 'test/unit/assertions'
 
 module Bbq
