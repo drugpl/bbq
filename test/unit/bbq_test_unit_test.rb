@@ -6,7 +6,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
   def test_sinatra
     create_file 'test/dope/test/acceptance/root_path_test.rb', <<-TESTCASE
       require 'app'
-      require 'bbq/test'
+      require 'bbq/test_unit'
 
       class DopeAppRootTest < Bbq::TestCase
         FAILED_ASSERTION = RUBY_VERSION < "1.9" ? Test::Unit::AssertionFailedError : MiniTest::Assertion
@@ -34,7 +34,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
   def test_dsl
     create_file 'test/dummy/test/acceptance/dsl_test.rb', <<-TESTCASE
       require 'test_helper'
-      require 'bbq/test'
+      require 'bbq/test_unit'
 
       class DslTest < Bbq::TestCase
         background do
@@ -60,7 +60,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
   def test_implicit_user_eyes
     create_file 'test/dummy/test/acceptance/implicit_user_eyes_test.rb', <<-TESTUNIT
       require 'test_helper'
-      require 'bbq/test'
+      require 'bbq/test_unit'
 
       FAILED_ASSERTION = RUBY_VERSION < "1.9" ? Test::Unit::AssertionFailedError : MiniTest::Assertion
 
@@ -84,7 +84,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
   def test_api_client
     create_file 'test/dummy/test/acceptance/api_test.rb', <<-TESTUNIT
       require 'test_helper'
-      require 'bbq/test'
+      require 'bbq/test_unit'
       require 'bbq/test_client'
 
       class ApiTest < Bbq::TestCase

@@ -54,7 +54,7 @@ rails generate bbq:install
 Require BBQ in test/test_helper.rb (in case of Test::Unit):
 
 ```ruby
-require "bbq/test"
+require "bbq/test_unit"
 ```
 
 Require BBQ in spec/spec_helper.rb (in case of RSpec):
