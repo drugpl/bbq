@@ -26,7 +26,7 @@ module Bbq
     protected
 
     def app
-      options[:app] || (Rails.application if Bbq.rails?)
+      options[:app] || Bbq.app
     end
 
     def default_headers
