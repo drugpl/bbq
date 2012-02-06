@@ -139,11 +139,24 @@ class BbqTestUnitTest < Test::Unit::TestCase
           assert_equal 200, response.status
           assert_equal 7, response.body["colors"]
         end
+
+        scenario 'client using testing tool with unsupported method' do
+          class CustomTestingToolClient < Bbq::TestClient
+            def testing_tool
+              Object.new
+            end
+          end
+
+          client = CustomTestingToolClient.new
+          assert_raise Bbq::TestClient::UnsupportedMethodError do
+            client.patch "/rainbow"
+          end
+        end
       end
     TESTUNIT
 
     run_cmd 'ruby -Ilib -Itest/dummy/test test/dummy/test/acceptance/api_test.rb'
-    assert_match /4 tests, 14 assertions, 0 failures, 0 errors/, output
+    assert_match /5 tests, 15 assertions, 0 failures, 0 errors/, output
   end
 
   def test_session_pool
