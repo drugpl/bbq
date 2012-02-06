@@ -2,23 +2,25 @@ require 'bbq/roles'
 
 module Bbq
   class TestClient
-    include Bbq::Roles
+    class UnsupportedMethodError < StandardError; end
 
-    attr_reader :options
+    include Bbq::Roles
 
     def initialize(options = {})
       @options = options
     end
 
-    HTTP_METHODS = %w(get post put delete)
+    HTTP_METHODS = %w(get post put delete head options patch)
 
     HTTP_METHODS.each do |method|
       class_eval <<-RUBY
         def #{method}(path, params = {}, headers = {})
-          rack_response = testing_tool.send(:#{method}, path, params, default_headers.merge(headers))
-          response = parse_response(rack_response)
-          yield response if block_given?
-          response
+          response = testing_tool.send(:#{method}, path, params, default_headers.merge(headers))
+          parsed_response = parse_response(response)
+          yield parsed_response if block_given?
+          parsed_response
+        rescue NoMethodError
+          raise UnsupportedMethodError, "Your testing tool does not support #{method.upcase} method"
         end
       RUBY
     end
@@ -26,25 +28,25 @@ module Bbq
     protected
 
     def app
-      options[:app] || Bbq.app
+      @options[:app] || Bbq.app
     end
 
     def default_headers
-      options[:headers] || {}
+      @options[:headers] || {}
     end
 
     def testing_tool
       @testing_tool ||= RackTest.new(app)
     end
 
-    def parse_response(rack_response)
-      case rack_response.headers["Content-Type"]
+    def parse_response(response)
+      case response.headers["Content-Type"]
       when /^application\/(.*\+)?json/
-        rack_response.extend(JsonBody)
+        response.extend(JsonBody)
       when /^application\/(.*\+)?x-yaml/
-        rack_response.extend(YamlBody)
+        response.extend(YamlBody)
       else
-        rack_response
+        response
       end
     end
 
