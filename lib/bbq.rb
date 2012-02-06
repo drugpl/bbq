@@ -1,17 +1,17 @@
 require 'pathname'
 
 module Bbq
-  extend self
+  class << self
+    def root
+      @root ||= Pathname.new(File.expand_path(File.join(File.dirname(__FILE__), '..')))
+    end
 
-  def root
-    @root ||= Pathname.new(File.expand_path(File.join(File.dirname(__FILE__), '..')))
+    def rails?
+      defined?(::Rails)
+    end
+
+    attr_accessor :app
   end
-
-  def rails?
-    defined?(::Rails)
-  end
-
-  attr_accessor :app
 end
 
 require 'bbq/railtie' if Bbq.rails?
