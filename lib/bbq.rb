@@ -10,8 +10,12 @@ module Bbq
       defined?(::Rails)
     end
 
+    def railtie_support?
+      rails? && ::Rails::VERSION::MAJOR >= 3
+    end
+
     attr_accessor :app
   end
 end
 
-require 'bbq/railtie' if Bbq.rails?
+require 'bbq/railtie' if Bbq.railtie_support?
