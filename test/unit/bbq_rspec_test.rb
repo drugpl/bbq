@@ -98,7 +98,7 @@ class BbqRspecTest < Test::Unit::TestCase
 
       feature 'application API' do
         scenario 'client fetches the rainbow as JSON' do
-          client = Bbq::TestClient.new(:headers => { 'HTTP_ACCEPT' => 'application/json' })
+          client = Bbq::TestClient.new(:headers => { 'Accept' => 'application/json' })
           client.get "/rainbow" do |response|
             response.status.should == 200
             response.headers["Content-Type"].should match "application/json"
