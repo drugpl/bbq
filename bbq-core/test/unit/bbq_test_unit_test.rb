@@ -140,14 +140,14 @@ class BbqTestUnitTest < Test::Unit::TestCase
           assert_equal 7, response.body["colors"]
         end
 
-        scenario 'client using testing tool with unsupported method' do
-          class CustomTestingToolClient < Bbq::TestClient
-            def testing_tool
+        scenario 'client using driver with unsupported method' do
+          class CustomDriverClient < Bbq::TestClient
+            def driver
               Object.new
             end
           end
 
-          client = CustomTestingToolClient.new
+          client = CustomDriverClient.new
           assert_raise Bbq::TestClient::UnsupportedMethodError do
             client.patch "/rainbow"
           end
