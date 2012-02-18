@@ -57,7 +57,26 @@ module Bbq
         self.app = app
       end
 
+      module ConvertHeaders
+        HTTP_METHODS.each do |method|
+          class_eval <<-RUBY
+            def #{method}(path, params = {}, headers = {})
+              super(path, params, to_env_headers(headers))
+            end
+          RUBY
+        end
+
+        def to_env_headers(http_headers)
+          http_headers.map do |k, v|
+            k = k.upcase.gsub("-", "_")
+            k = "HTTP_#{k}" unless ["CONTENT_TYPE", "CONTENT_LENGTH"].include?(k)
+            { k => v }
+          end.inject(:merge)
+        end
+      end
+
       include Rack::Test::Methods
+      include ConvertHeaders
     end
 
     module JsonBody
