@@ -15,12 +15,12 @@ module Bbq
     HTTP_METHODS.each do |method|
       class_eval <<-RUBY
         def #{method}(path, params = {}, headers = {})
-          response = testing_tool.send(:#{method}, path, params, default_headers.merge(headers))
+          response = driver.send(:#{method}, path, params, default_headers.merge(headers))
           parsed_response = parse_response(response)
           yield parsed_response if block_given?
           parsed_response
         rescue NoMethodError
-          raise UnsupportedMethodError, "Your testing tool does not support #{method.upcase} method"
+          raise UnsupportedMethodError, "Your driver does not support #{method.upcase} method"
         end
       RUBY
     end
@@ -35,8 +35,8 @@ module Bbq
       @options[:headers] || {}
     end
 
-    def testing_tool
-      @testing_tool ||= RackTest.new(app)
+    def driver
+      @driver ||= RackTest.new(app)
     end
 
     def parse_response(response)
