@@ -42,7 +42,7 @@ First, add BBQ to your apps Gemfile:
 
 ```ruby
 # Gemfile
-gem "bbq", "~> 0.0.2"
+gem "bbq", :git => "git://github.com/drugpl/bbq"
 ```
 
 Run install generator:
