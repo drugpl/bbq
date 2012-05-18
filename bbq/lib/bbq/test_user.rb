@@ -1,3 +1,4 @@
+require 'bbq'
 require 'capybara/rails' if Bbq.rails?
 require 'bbq/session'
 require 'bbq/roles'
