@@ -33,7 +33,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
     TESTCASE
 
     run_cmd 'ruby -Itest/dope -Itest/dope/test test/dope/test/acceptance/root_path_test.rb'
-    assert_match /1 tests, 3 assertions, 0 failures, 0 errors/, output
+    assert_match /1 tests, \d+ assertions, 0 failures, 0 errors/, output
   end
 
   def test_dsl
@@ -59,7 +59,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
     TESTCASE
 
     run_cmd 'ruby -Ilib -Itest/dummy/test test/dummy/test/acceptance/dsl_test.rb'
-    assert_match /1 tests, 1 assertions, 0 failures, 0 errors/, output
+    assert_match /1 tests, \d+ assertions, 0 failures, 0 errors/, output
   end
 
   def test_implicit_user_eyes
@@ -84,7 +84,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
     TESTUNIT
 
     run_cmd 'ruby -Ilib -Itest/dummy/test test/dummy/test/acceptance/implicit_user_eyes_test.rb'
-    assert_match /1 tests, 2 assertions, 0 failures, 0 errors/, output
+    assert_match /1 tests, \d+ assertions, 0 failures, 0 errors/, output
   end
 
   def test_api_client
@@ -156,7 +156,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
     TESTUNIT
 
     run_cmd 'ruby -Ilib -Itest/dummy/test test/dummy/test/acceptance/api_test.rb'
-    assert_match /5 tests, 15 assertions, 0 failures, 0 errors/, output
+    assert_match /5 tests, \d+ assertions, 0 failures, 0 errors/, output
   end
 
   def test_session_pool
@@ -201,7 +201,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
     TESTUNIT
 
     run_cmd 'ruby -Ilib -Itest/dummy/test -Itest/support test/dummy/test/acceptance/session_pool_test.rb'
-    assert_match /3 tests, 6 assertions, 0 failures, 0 errors/, output
+    assert_match /3 tests, \d+ assertions, 0 failures, 0 errors/, output
     drivers_created = File.readlines(@log_path).size
     assert_equal 2, drivers_created
   end
@@ -242,7 +242,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
     TESTUNIT
 
     run_cmd 'ruby -Ilib -Itest/dummy/test -Itest/support test/dummy/test/acceptance/without_session_pool_test.rb'
-    assert_match /3 tests, 0 assertions, 0 failures, 0 errors/, output
+    assert_match /3 tests, \d+ assertions, 0 failures, 0 errors/, output
     drivers_created = File.readlines(@log_path).size
     assert_equal 4, drivers_created
   end
