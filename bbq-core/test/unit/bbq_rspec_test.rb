@@ -23,7 +23,7 @@ class BbqRspecTest < Test::Unit::TestCase
       end
     RSPEC
 
-    run_cmd 'rspec -Itest/dummy/spec test/dummy/spec/acceptance/dsl_spec.rb'
+    run_cmd 'bundle exec rspec -Itest/dummy/spec test/dummy/spec/acceptance/dsl_spec.rb'
     assert_match /1 example, 0 failures/, output
   end
 
@@ -43,7 +43,7 @@ class BbqRspecTest < Test::Unit::TestCase
       end
     RSPEC
 
-    run_cmd 'rspec -Itest/dummy/spec test/dummy/spec/acceptance/capybara_matchers_spec.rb'
+    run_cmd 'bundle exec rspec -Itest/dummy/spec test/dummy/spec/acceptance/capybara_matchers_spec.rb'
     assert_match /1 example, 0 failures/, output
   end
 
@@ -58,13 +58,21 @@ class BbqRspecTest < Test::Unit::TestCase
           user = Bbq::TestUser.new
           user.visit "/miracle"
           user.should see("MIRACLE")
-          user.should not_see("BBQ")
+          user.should_not see("BBQ")
+        end
+
+        scenario 'should allow to chain matcher with within scope' do
+          user = Bbq::TestUser.new
+          user.visit '/ponycorns'
+
+          user.should see('Pink').within('#unicorns')
+          user.should_not see('Violet').within('#unicorns')
         end
       end
     RSPEC
 
-    run_cmd 'rspec -Itest/dummy/spec test/dummy/spec/acceptance/bbq_matchers_spec.rb'
-    assert_match /1 example, 0 failures/, output
+    run_cmd 'bundle exec rspec -Itest/dummy/spec test/dummy/spec/acceptance/bbq_matchers_spec.rb'
+    assert_match /2 examples, 0 failures/, output
   end
 
   def test_implicit_user_eyes
@@ -80,14 +88,24 @@ class BbqRspecTest < Test::Unit::TestCase
           user.see!("MIRACLE")
           user.not_see!("BBQ")
 
-          lambda { user.see!("BBQ") }.should raise_error
-          lambda { user.not_see!("MIRACLE") }.should raise_error
+          expect { user.see!("BBQ") }.to raise_error
+          expect { user.not_see!("MIRACLE") }.to raise_error
+        end
+
+        scenario 'should work with within option' do
+          user = Bbq::TestUser.new
+          user.visit '/ponycorns'
+          user.see! 'Pink', :within => '#unicorns'
+          user.not_see! 'Violet', :within => '#unicorns'
+
+          expect { user.see! 'Violet', :within => '#unicorns' }.to raise_error
+          expect { user.not_see! 'Pink', :within => '#unicorns' }.to raise_error
         end
       end
     RSPEC
 
-    run_cmd 'rspec -Itest/dummy/spec test/dummy/spec/acceptance/implicit_user_eyes_spec.rb'
-    assert_match /1 example, 0 failures/, output
+    run_cmd 'bundle exec rspec -Itest/dummy/spec test/dummy/spec/acceptance/implicit_user_eyes_spec.rb'
+    assert_match /2 examples, 0 failures/, output
   end
 
   def test_api_client
@@ -109,7 +127,7 @@ class BbqRspecTest < Test::Unit::TestCase
       end
     RSPEC
 
-    run_cmd 'rspec -Itest/dummy/spec test/dummy/spec/acceptance/api_spec.rb'
+    run_cmd 'bundle exec rspec -Itest/dummy/spec test/dummy/spec/acceptance/api_spec.rb'
     assert_match /1 example, 0 failures/, output
   end
 
@@ -152,7 +170,7 @@ class BbqRspecTest < Test::Unit::TestCase
       end
     RSPEC
 
-    run_cmd 'rspec -Itest/dummy/spec -Itest/support test/dummy/spec/acceptance/session_pool_spec.rb'
+    run_cmd 'bundle exec rspec -Itest/dummy/spec -Itest/support test/dummy/spec/acceptance/session_pool_spec.rb'
     assert_match /3 examples, 0 failures/, output
     drivers_created = File.readlines(@log_path).size
     assert_equal 2, drivers_created
@@ -193,7 +211,7 @@ class BbqRspecTest < Test::Unit::TestCase
       end
     RSPEC
 
-    run_cmd 'rspec -Itest/dummy/spec -Itest/support test/dummy/spec/acceptance/without_session_pool_spec.rb'
+    run_cmd 'bundle exec rspec -Itest/dummy/spec -Itest/support test/dummy/spec/acceptance/without_session_pool_spec.rb'
     assert_match /3 examples, 0 failures/, output
     drivers_created = File.readlines(@log_path).size
     assert_equal 4, drivers_created
