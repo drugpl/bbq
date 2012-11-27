@@ -23,7 +23,9 @@ module Bbq
 
       match_for_should do |page|
         if @locator
-          within(@locator) { page.see? text }
+          page.within(@locator) do
+            page.see? text
+          end
         else
           page.see? text
         end
@@ -31,18 +33,30 @@ module Bbq
 
       match_for_should_not do |page|
         if @locator
-        within(@locator) { page.not_see? text }
+          page.within(@locator) do
+            page.not_see? text
+          end
         else
           page.not_see? text
         end
       end
 
       failure_message_for_should do |page|
-        "expected to see #{text}"
+        body = if @locator
+          page.find(@locator).text
+        else
+          page.body
+        end
+        "expected to see #{text} in #{body}"
       end
 
       failure_message_for_should_not do |page|
-        "expected not to see #{text}"
+        body = if @locator
+          page.find(@locator).text
+        else
+          page.body
+        end
+        "expected not to see #{text} in #{body}"
       end
     end
   end
