@@ -41,6 +41,9 @@ class DriverFactory
       @clean
     end
 
+    def needs_server?
+      false
+    end
   end
 
 end
