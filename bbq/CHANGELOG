@@ -1,4 +1,4 @@
-0.1.0
+0.1.0 / 2013-01-06
 ==================
 
   * Extracted Rails' URL helpers inclusion to separate module
