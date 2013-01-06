@@ -1,54 +1,28 @@
-Warning & disclaimer
-====================
-
-This gem is currently under development. We're targeting most popular use cases - Rails & Rack applications (ex. Sinatra). However the philosophy behind it is not limited to Rails nor web applications in general. There is even example usage with EventMachine. Feel free to modify it for your own needs.
+# BBQ
 
 [![Build Status](https://secure.travis-ci.org/drugpl/bbq.png)](http://travis-ci.org/drugpl/bbq) [![Dependency Status](https://gemnasium.com/drugpl/bbq.png)](https://gemnasium.com/drugpl/bbq)
 
-BBQ
-===
-
 Object oriented acceptance testing using personas.
 
-* Ruby
-* OOP
-* DCI (Data Context Interaction) - for roles/personas
-* Test framework independent, based on Capybara
+* Ruby (no Gherkin)
+* Objects and methods instead of steps
+* Test framework independent (RSpec and Test::Unit support)
+* Thins based on Capybara.
+* DCI (Data Context Interaction) for roles/personas
 * Opinionated
 
-Difference from Cucumber
-========================
+## Setup
 
-* No Gherkin
-* Objects and methods instead of steps
-* Easier code reuse
-* No factories/fixtures
-
-Example applications
-====================
-
-* https://github.com/pawelpacana/roundtrip
-
-Related examples
-================
-
-* https://github.com/pawelpacana/eventmachine-bbq-example
-* https://github.com/drugpl/drug-site
-
-Installation
-============
-
-First, add BBQ to your apps Gemfile:
+First, add BBQ to your apps `Gemfile`:
 
 ```ruby
-# Gemfile
-gem "bbq", :git => "git://github.com/drugpl/bbq"
+gem "bbq", "0.1.0"
 ```
 
 Run install generator:
 
 ```
-rails generate bbq:install
+bundle exec rails generate bbq:install
 ```
 
 Require BBQ in test/test_helper.rb (in case of Test::Unit):
@@ -63,30 +37,27 @@ Require BBQ in spec/spec_helper.rb (in case of RSpec):
 require "bbq/rspec"
 ```
 
-Feature generator
-=================
+## Feature generator
 
 ```
-rails g bbq:test MyFeatureName
+bundle exec rails g bbq:test MyFeatureName
 ```
 
-Running features
-================
+## Running features
 
 For Test::Unit flavour:
 
 ```
-rake test:acceptance
+bundle exec rake test:acceptance
 ```
 
 For RSpec flavour:
 
 ```
-spec:acceptance
+bundle exec rake spec:acceptance
 ```
 
-Examples
-========
+## Examples
 
 ```ruby
 module Roundtrip
@@ -184,8 +155,7 @@ class AdminTicketsTest < Bbq::TestCase
 end
 ```
 
-Testing REST APIs
-================
+## Testing REST APIs
 
 Bbq provides `Bbq::TestClient`, similar to `Bbq::TestUser`, but intended for testing APIs.
 It's a thin wrapper around `Rack::Test` which allows you to send requests and run assertions
@@ -210,8 +180,7 @@ class ApiTest < Bbq::TestCase
 end
 ```
 
-Rails' URL Helpers
-================
+## Rails' URL Helpers
 
 Using url helpers from Rails in integration tests is not recommended.
 Testing routes is part of integration test, so you should actually use only
@@ -227,26 +196,21 @@ If you really need url helpers in your test user, just include them in your Test
 ```ruby
 require 'bbq/rails/routes'
 
-module Roundtrip
-  class TestUser < Bbq::TestUser
-    include Bbq::Rails::Routes
-  end
+class TestUser < Bbq::TestUser
+  include Bbq::Rails::Routes
 end
 ```
 or just
 
 ```ruby
-module Roundtrip
-  class TestUser < Bbq::TestUser
-    include ::ActionDispatch::Routing::UrlFor
-    include ::Rails.application.routes.url_helpers
-    include ::ActionDispatch::Routing::RouteSet::MountedHelpers unless ::Rails.version < "3.1"
-  end
+class TestUser < Bbq::TestUser
+  include ::ActionDispatch::Routing::UrlFor
+  include ::Rails.application.routes.url_helpers
+  include ::ActionDispatch::Routing::RouteSet::MountedHelpers unless ::Rails.version < "3.1"
 end
 ```
 
-Deal with Devise
-================
+## Devise support
 
 ```ruby
 require "bbq/test_user"
@@ -267,10 +231,9 @@ test "user register with devise" do
 end
 ```
 
-Caveats
-=======
+## Caveats
 
-<h2>Timeout::Error</h2>
+### Timeout::Error
 
 If you simulate multiple users in your tests and spawn multiple browsers with selenium it might
 be a good idea to use Thin instead of Webrick to create application server.
@@ -284,45 +247,20 @@ Capybara will use Thin instead of Webrick when it's available, so you only need 
 # In test group if you want it to
 # be used only in tests and not in your development mode
 # ex. when running 'rails s'
+
 gem 'thin', :require => false
 ```
 
-Development environment
-=======================
+## Development environment
 
 ```
 bundle install
 bundle exec rake test
 ```
 
-Additional information
-======================
+## Additional information
 
-* 2 problems with Cucumber http://andrzejonsoftware.blogspot.com/2011/03/2-problems-with-cucumber.html
-* Object oriented acceptance testing http://andrzejonsoftware.blogspot.com/2011/04/object-oriented-acceptance-testing.html
-* Events in acceptance tests http://andrzejonsoftware.blogspot.com/2011/04/events-in-acceptance-tests.html
+* [2 problems with Cucumber](http://andrzejonsoftware.blogspot.com/2011/03/2-problems-with-cucumber.html)
+* [Object oriented acceptance testing](http://andrzejonsoftware.blogspot.com/2011/04/object-oriented-acceptance-testing.html)
+* [Events in acceptance tests](http://andrzejonsoftware.blogspot.com/2011/04/events-in-acceptance-tests.html)
 
-Maintainers
-===========
-
-* Paweł Pacana (http://github.com/pawelpacana)
-* Andrzej Krzywda (http://andrzejkrzywda.com)
-* Michał Łomnicki (http://mlomnicki.com)
-* Robert Pankowecki (http://robert.pankowecki.pl)
-
-Contributors
-============
-
-* Piotr Niełacny (http://ruby-blog.pl)
-* Peter Suschlik (http://peter.suschlik.de)
-* Jan Dudek (http://jandudek.com)
-
-Future plans
-============
-
-* Events (http://andrzejonsoftware.blogspot.com/2011/04/events-in-acceptance-tests.html)
-
-License
-=======
-
-MIT License
