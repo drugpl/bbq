@@ -59,62 +59,62 @@ bundle exec rake spec:acceptance
 
 ## Examples
 
+### Roles and Devise integration
+
 ```ruby
-module Roundtrip
-  class TestUser < Bbq::TestUser
-    include Bbq::Devise
+class TestUser < Bbq::TestUser
+  include Bbq::Devise
 
-    def update_ticket(summary, comment)
-      show_ticket(summary)
-      fill_in  "Comment", :with => comment
-      click_on "Add update"
+  def update_ticket(summary, comment)
+    show_ticket(summary)
+    fill_in  "Comment", :with => comment
+    click_on "Add update"
+  end
+
+  def open_application
+    visit '/'
+  end
+
+  module TicketReporter
+    def open_tickets_listing
+      open_application
+      click_link 'Tickets'
     end
 
-    def open_application
-      visit '/'
+    def open_ticket(summary, description)
+      open_tickets_listing
+      click_on "Open a new ticket"
+      fill_in  "Summary", :with => summary
+      fill_in  "Description", :with => description
+      click_on "Open ticket"
     end
 
-    module TicketReporter
-      def open_tickets_listing
-        open_application
-        click_link 'Tickets'
-      end
+    def show_ticket(summary)
+      open_tickets_listing
+      click_on summary
+    end
+  end
 
-      def open_ticket(summary, description)
-        open_tickets_listing
-        click_on "Open a new ticket"
-        fill_in  "Summary", :with => summary
-        fill_in  "Description", :with => description
-        click_on "Open ticket"
-      end
-
-      def show_ticket(summary)
-        open_tickets_listing
-        click_on summary
-      end
+  module TicketManager
+    def open_administration
+      visit '/admin'
     end
 
-    module TicketManager
-      def open_administration
-        visit '/admin'
-      end
+    def open_tickets_listing
+      open_administration
+      click_link 'Tickets'
+    end
 
-      def open_tickets_listing
-        open_administration
-        click_link 'Tickets'
-      end
+    def close_ticket(summary, comment = nil)
+      open_tickets_listing
+      click_on summary
+      fill_in  "Comment", :with => comment if comment
+      click_on "Close ticket"
+    end
 
-      def close_ticket(summary, comment = nil)
-        open_tickets_listing
-        click_on summary
-        fill_in  "Comment", :with => comment if comment
-        click_on "Close ticket"
-      end
-
-      def show_ticket(summary)
-        open_tickets_listing
-        click_on summary
-      end
+    def show_ticket(summary)
+      open_tickets_listing
+      click_on summary
     end
   end
 end
@@ -132,17 +132,17 @@ class AdminTicketsTest < Bbq::TestCase
     descriptions = ["I lost my yellow note with password under the table!",
                     "My IE renders crap instead of crispy fonts!"]
 
-    alice = Roundtrip::TestUser.new
+    alice = TestUser.new
     alice.roles(:ticket_reporter)
     alice.register_and_login
     alice.open_ticket(summaries.first, descriptions.first)
 
-    bob = Roundtrip::TestUser.new
+    bob = TestUser.new
     bob.roles(:ticket_reporter)
     bob.register_and_login
     bob.open_ticket(summaries.second, descriptions.second)
 
-    charlie = Roundtrip::TestUser.new(:email => @email, :password => @password)
+    charlie = TestUser.new(:email => @email, :password => @password)
     charlie.login # charlie was already "registered" in factory as admin
     charlie.roles(:ticket_manager)
     charlie.open_tickets_listing
