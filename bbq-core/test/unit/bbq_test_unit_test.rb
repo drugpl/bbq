@@ -14,8 +14,6 @@ class BbqTestUnitTest < Test::Unit::TestCase
       require 'bbq/test_user'
 
       class DopeAppRootTest < Bbq::TestCase
-        FAILED_ASSERTION = RUBY_VERSION < "1.9" ? Test::Unit::AssertionFailedError : MiniTest::Assertion
-
         background do
           Bbq.app = ::Dope::App
         end
@@ -26,8 +24,8 @@ class BbqTestUnitTest < Test::Unit::TestCase
           user.see!("BBQ supports sinatra")
           assert user.see?("BBQ supports sinatra")
 
-          assert_raises(FAILED_ASSERTION) { user.see!("blah") }
-          assert_raises(FAILED_ASSERTION) { user.not_see!("BBQ supports sinatra") }
+          assert_raises(MiniTest::Assertion) { user.see!("blah") }
+          assert_raises(MiniTest::Assertion) { user.not_see!("BBQ supports sinatra") }
         end
       end
     TESTCASE
@@ -68,8 +66,6 @@ class BbqTestUnitTest < Test::Unit::TestCase
       require 'bbq/test_unit'
       require 'bbq/test_user'
 
-      FAILED_ASSERTION = RUBY_VERSION < "1.9" ? Test::Unit::AssertionFailedError : MiniTest::Assertion
-
       class ImplicitUserEyesTest < Bbq::TestCase
         scenario 'should see welcome text' do
           user = Bbq::TestUser.new
@@ -77,8 +73,8 @@ class BbqTestUnitTest < Test::Unit::TestCase
           user.see!("MIRACLE")
           user.not_see!("BBQ")
 
-          assert_raises(FAILED_ASSERTION) { user.see!("BBQ") }
-          assert_raises(FAILED_ASSERTION) { user.not_see!("MIRACLE") }
+          assert_raises(MiniTest::Assertion) { user.see!("BBQ") }
+          assert_raises(MiniTest::Assertion) { user.not_see!("MIRACLE") }
         end
       end
     TESTUNIT
