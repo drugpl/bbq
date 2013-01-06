@@ -180,7 +180,7 @@ class ApiTest < Bbq::TestCase
 end
 ```
 
-## Rails' URL Helpers
+## Rails URL Helpers
 
 Using url helpers from Rails in integration tests is not recommended.
 Testing routes is part of integration test, so you should actually use only
@@ -251,16 +251,8 @@ Capybara will use Thin instead of Webrick when it's available, so you only need 
 gem 'thin', :require => false
 ```
 
-## Development environment
-
-```
-bundle install
-bundle exec rake test
-```
-
 ## Additional information
 
 * [2 problems with Cucumber](http://andrzejonsoftware.blogspot.com/2011/03/2-problems-with-cucumber.html)
 * [Object oriented acceptance testing](http://andrzejonsoftware.blogspot.com/2011/04/object-oriented-acceptance-testing.html)
-* [Events in acceptance tests](http://andrzejonsoftware.blogspot.com/2011/04/events-in-acceptance-tests.html)
 
