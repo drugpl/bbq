@@ -155,6 +155,41 @@ class AdminTicketsTest < Bbq::TestCase
 end
 ```
 
+### RSpec integration
+
+```ruby
+class TestUser < Bbq::TestUser
+  def email
+    @options[:email] || "buyer@example.com"
+  end
+
+  module Buyer
+    def ask_question(question)
+      fill_in "question", :with => question
+      fill_in "email", :with => email
+      click_on("Ask")
+    end
+  end
+end
+```
+
+```ruby
+feature "ask question widget" do
+  let(:user) {
+    user = TestUser.new(:driver => :webkit)
+    user.roles('buyer')
+    user
+  }
+  
+  scenario "as a guest user, I should be able to ask a question" do
+    user.go_to_page_and_open_widget("/widget") do
+      user.ask_question "my question"
+      user.see!("Thanks!")
+    end
+  end
+end
+```
+
 ## Testing REST APIs
 
 Bbq provides `Bbq::TestClient`, similar to `Bbq::TestUser`, but intended for testing APIs.
