@@ -1,6 +1,6 @@
 # BBQ
 
-[![Build Status](https://secure.travis-ci.org/drugpl/bbq.png)](http://travis-ci.org/drugpl/bbq) [![Dependency Status](https://gemnasium.com/drugpl/bbq.png)](https://gemnasium.com/drugpl/bbq)
+[![Build Status](https://secure.travis-ci.org/drugpl/bbq.png)](http://travis-ci.org/drugpl/bbq) [![Dependency Status](https://gemnasium.com/drugpl/bbq.png)](https://gemnasium.com/drugpl/bbq) [![Code Climate](https://codeclimate.com/github/drugpl/bbq.png)](https://codeclimate.com/github/drugpl/bbq) [![Gem Version](https://badge.fury.io/rb/bbq.png)](http://badge.fury.io/rb/bbq) 
 
 Object oriented acceptance testing using personas.
 
