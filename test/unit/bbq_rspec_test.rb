@@ -58,9 +58,9 @@ feature 'bbq matchers' do
     user = Bbq::TestUser.new
     user.visit "/miracle"
     expect { user.should see("MIRACLE") }.to_not raise_error(RSpec::Expectations::ExpectationNotMetError)
-    expect { user.should_not see("MIRACLE") }.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected not to see MIRACLE in/)
+    expect { user.should_not see("MIRACLE") }.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected not to see "MIRACLE" in "MIRACLE"/)
     expect { user.should_not see("BBQ") }.to_not raise_error(RSpec::Expectations::ExpectationNotMetError)
-    expect { user.should see("BBQ") }.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected to see BBQ in/)
+    expect { user.should see("BBQ") }.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected to see "BBQ" in "MIRACLE"/)
   end
 
   scenario 'should allow to chain matcher with within scope' do
@@ -68,9 +68,9 @@ feature 'bbq matchers' do
     user.visit '/ponycorns'
 
     expect { user.should see('Pink').within('#unicorns') }.to_not raise_error(RSpec::Expectations::ExpectationNotMetError)
-    expect { user.should_not see('Pink').within('#unicorns') }.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected not to see Pink in Pink/)
+    expect { user.should_not see('Pink').within('#unicorns') }.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected not to see "Pink" in "Pink"/)
     expect { user.should_not see('Violet').within('#unicorns') }.to_not raise_error(RSpec::Expectations::ExpectationNotMetError)
-    expect { user.should see('Violet').within('#unicorns') }.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected to see Violet in Pink/)
+    expect { user.should see('Violet').within('#unicorns') }.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected to see "Violet" in "Pink"/)
   end
 end
     RSPEC
@@ -89,26 +89,122 @@ feature 'implicit user eyes' do
   scenario 'should see welcome text' do
     user = Bbq::TestUser.new
     user.visit "/miracle"
-    user.see!("MIRACLE")
-    user.not_see!("BBQ")
+    user.should see("MIRACLE")
+    user.should_not see("BBQ")
 
-    expect { user.see!("BBQ") }.to raise_error
-    expect { user.not_see!("MIRACLE") }.to raise_error
+    expect { user.should see("BBQ") }.to raise_error
+    expect { user.should_not see("MIRACLE") }.to raise_error
   end
 
-  scenario 'should work with within option' do
+  scenario 'should be chainable with within' do
     user = Bbq::TestUser.new
     user.visit '/ponycorns'
-    user.see! 'Pink', :within => '#unicorns'
-    user.not_see! 'Violet', :within => '#unicorns'
+    user.should see('Pink').within('#unicorns')
+    user.should_not see('Violet').within('#unicorns')
 
-    expect { user.see! 'Violet', :within => '#unicorns' }.to raise_error
-    expect { user.not_see! 'Pink', :within => '#unicorns' }.to raise_error
+    expect { user.should see('Violet').within('#unicorns') }.to raise_error
+    expect { user.should_not see('Pink').within('#unicorns') }.to raise_error
+  end
+
+  scenario 'should be chainable with in_table_row' do
+    user = Bbq::TestUser.new
+    user.visit '/ponycorns'
+    user.should see("Doe").in_table_row("John")
+    user.should_not see("John").in_table_row("First name")
+
+    expect { user.should see("First name").in_table_row("John") }.to raise_error
+    expect { user.should_not see("First name").in_table_row("Last name") }.to raise_error
   end
 end
     RSPEC
 
     run_cmd 'bundle exec rspec -Itest/dummy/spec test/dummy/spec/acceptance/implicit_user_eyes_spec.rb'
+    assert_match /3 examples, 0 failures/, output
+  end
+
+  def test_table_matcher
+    create_file 'test/dummy/spec/acceptance/table_matcher_spec.rb', <<-RSPEC
+require 'spec_helper'
+require 'bbq/rspec'
+require 'bbq/test_user'
+
+feature 'table matcher' do
+  scenario 'should allow to match table' do
+    user = Bbq::TestUser.new
+    user.visit "/ponycorns"
+    user.should see_table("table").with_content([
+      ["First name", "Last name"],
+      ["Footer"],
+      ["John", "Doe"]
+    ])
+    user.should see_table_with_content("table", [
+      ["First name", "Last name"],
+      ["Footer"],
+      ["John", "Doe"]
+    ])
+    user.should_not see_table("table").with_content([
+      ["First name", "Doe"],
+      ["Footer"],
+      ["John", "Last name"]
+    ])
+    user.should_not see_table_with_content("table", [
+      ["First name", "Doe"],
+      ["Footer"],
+      ["John", "Last name"]
+    ])
+
+    expect {
+      user.should_not see_table("table").with_content([
+        ["First name", "Last name"],
+        ["Footer"],
+        ["John", "Doe"]
+      ])
+    }.to raise_error
+    expect {
+      user.should see_table("table").with_content([
+        ["First name", "Doe"],
+        ["Footer"],
+        ["John", "Last name"]
+      ])
+    }.to raise_error
+  end
+
+  scenario 'should allow to scope table contents to table header, footer or body' do
+    user = Bbq::TestUser.new
+    user.visit "/ponycorns"
+    user.should see_table("table").with_content([
+      ["First name", "Last name"]
+    ]).in_header
+    user.should see_table("table").with_content([
+      ["Footer"]
+    ]).in_footer
+    user.should see_table("table").with_content([
+      ["John", "Doe"]
+    ]).in_body
+
+    user.should_not see_table("table").with_content([
+      ["First name", "Last name"]
+    ]).in_body
+    user.should_not see_table("table").with_content([
+      ["First name", "Last name"]
+    ]).in_footer
+    user.should_not see_table("table").with_content([
+      ["Footer"]
+    ]).in_header
+    user.should_not see_table("table").with_content([
+      ["Footer"]
+    ]).in_body
+    user.should_not see_table("table").with_content([
+      ["John", "Doe"]
+    ]).in_header
+    user.should_not see_table("table").with_content([
+      ["John", "Doe"]
+    ]).in_footer
+  end
+end
+    RSPEC
+
+    run_cmd 'bundle exec rspec -Itest/dummy/spec test/dummy/spec/acceptance/table_matcher_spec.rb'
     assert_match /2 examples, 0 failures/, output
   end
 
