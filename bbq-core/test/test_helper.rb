@@ -13,5 +13,10 @@ ActiveRecord::Base.establish_connection("test")
 ActiveRecord::Migration.verbose = false
 load(File.expand_path("../dummy/db/schema.rb", __FILE__))
 
+require 'capybara'
+Capybara.register_driver :rack_test_the_other do |app|
+  Capybara::RackTest::Driver.new(app)
+end
+
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }

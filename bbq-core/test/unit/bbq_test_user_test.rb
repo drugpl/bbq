@@ -28,8 +28,8 @@ class BbqTestUserTest < Test::Unit::TestCase
   end
 
   def test_driver_option
-    user = TestUser.new(:driver => :selenium)
-    assert_equal :selenium, user.page.mode
+    user = TestUser.new(:driver => :rack_test_the_other)
+    assert_equal :rack_test_the_other, user.page.mode
   end
 
   def test_roles
