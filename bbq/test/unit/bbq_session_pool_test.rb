@@ -34,7 +34,7 @@ class BbqSessionPoolTest < Test::Unit::TestCase
   def test_pool_returns_correct_driver
     pool = Bbq::Session::Pool.new
     pool.next(:rack_test)
-    pool.next(:selenium)
+    pool.next(:rack_test_the_other)
     pool.release
 
     assert_equal :rack_test, pool.next(:rack_test).mode
