@@ -71,7 +71,7 @@ module Bbq
             k = k.upcase.gsub("-", "_")
             k = "HTTP_#{k}" unless ["CONTENT_TYPE", "CONTENT_LENGTH"].include?(k)
             { k => v }
-          end.inject(:merge)
+          end.inject({}, :merge)
         end
       end
 
