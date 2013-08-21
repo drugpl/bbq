@@ -15,18 +15,19 @@ module Bbq
     HTTP_METHODS.each do |method|
       class_eval <<-RUBY
         def #{method}(path, params = {}, headers = {})
-          response = driver.send(:#{method}, path, params, default_headers.merge(headers))
+          unless driver.respond_to? :#{method}
+            raise UnsupportedMethodError, "Your driver does not support #{method.upcase} method"
+          end
+
+          response = driver.#{method}(path, params, default_headers.merge(headers))
           parsed_response = parse_response(response)
           yield parsed_response if block_given?
           parsed_response
-        rescue NoMethodError
-          raise UnsupportedMethodError, "Your driver does not support #{method.upcase} method"
         end
       RUBY
     end
 
     protected
-
     def app
       @options[:app] || Bbq.app
     end
