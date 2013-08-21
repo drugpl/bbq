@@ -136,6 +136,13 @@ class BbqTestUnitTest < Test::Unit::TestCase
           assert_equal 7, response.body["colors"]
         end
 
+        scenario 'client should propagate errors from the app' do
+          assert_raise NoMethodError do
+            client = Bbq::TestClient.new
+            client.get "/uh_oh"
+          end
+        end
+
         scenario 'client using driver with unsupported method' do
           class CustomDriverClient < Bbq::TestClient
             def driver
@@ -152,7 +159,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
     TESTUNIT
 
     run_cmd 'ruby -Ilib -Itest/dummy/test test/dummy/test/acceptance/api_test.rb'
-    assert_match /5 tests, \d+ assertions, 0 failures, 0 errors/, output
+    assert_match /\d+ tests, \d+ assertions, 0 failures, 0 errors/, output
   end
 
   def test_session_pool

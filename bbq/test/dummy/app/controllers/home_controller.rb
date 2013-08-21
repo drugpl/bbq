@@ -22,4 +22,8 @@ class HomeController < ApplicationController
       format.yaml { render :text => @rainbow.to_yaml }
     end
   end
+
+  def uh_oh
+    raise NoMethodError
+  end
 end
