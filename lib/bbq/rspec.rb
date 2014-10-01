@@ -67,11 +67,11 @@ module Bbq
     include Bbq::RSpecMatchers
 
     def see!(*args)
-      see?(*args).should be_true
+      see?(*args).should be_truthy
     end
 
     def not_see!(*args)
-      not_see?(*args).should be_true
+      not_see?(*args).should be_truthy
     end
   end
 end
