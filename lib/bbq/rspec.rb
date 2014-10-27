@@ -21,7 +21,7 @@ module Bbq
         @locator = locator
       end
 
-      match_for_should do |page|
+      match do |page|
         if @locator
           page.within(@locator) do
             page.see? text
@@ -31,7 +31,7 @@ module Bbq
         end
       end
 
-      match_for_should_not do |page|
+      match_when_negated do |page|
         if @locator
           page.within(@locator) do
             page.not_see? text
@@ -41,7 +41,7 @@ module Bbq
         end
       end
 
-      failure_message_for_should do |page|
+      failure_message do |page|
         body = if @locator
           page.find(@locator).text
         else
@@ -50,7 +50,7 @@ module Bbq
         "expected to see #{text} in #{body}"
       end
 
-      failure_message_for_should_not do |page|
+      failure_message_when_negated do |page|
         body = if @locator
           page.find(@locator).text
         else
