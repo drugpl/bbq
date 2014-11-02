@@ -14,51 +14,108 @@ module Bbq
   end
 
   module RSpecMatchers
-    extend RSpec::Matchers::DSL
+    module V2
+      extend ::RSpec::Matchers::DSL
 
-    matcher :see do |text|
-      chain :within do |locator|
-        @locator = locator
-      end
+      matcher :see do |text|
+        chain :within do |locator|
+          @locator = locator
+        end
 
-      match do |page|
-        if @locator
-          page.within(@locator) do
+        match_for_should do |page|
+          if @locator
+            page.within(@locator) do
+              page.see? text
+            end
+          else
             page.see? text
           end
-        else
-          page.see? text
         end
-      end
 
-      match_when_negated do |page|
-        if @locator
-          page.within(@locator) do
+        match_for_should_not do |page|
+          if @locator
+            page.within(@locator) do
+              page.not_see? text
+            end
+          else
             page.not_see? text
           end
-        else
-          page.not_see? text
         end
-      end
 
-      failure_message do |page|
-        body = if @locator
-          page.find(@locator).text
-        else
-          page.body
+        failure_message_for_should do |page|
+          body = if @locator
+                   page.find(@locator).text
+                 else
+                   page.body
+                 end
+          "expected to see #{text} in #{body}"
         end
-        "expected to see #{text} in #{body}"
-      end
 
-      failure_message_when_negated do |page|
-        body = if @locator
-          page.find(@locator).text
-        else
-          page.body
+        failure_message_for_should_not do |page|
+          body = if @locator
+                   page.find(@locator).text
+                 else
+                   page.body
+                 end
+          "expected not to see #{text} in #{body}"
         end
-        "expected not to see #{text} in #{body}"
       end
     end
+
+    module V3
+      extend ::RSpec::Matchers::DSL
+
+      matcher :see do |text|
+        chain :within do |locator|
+          @locator = locator
+        end
+
+        match do |page|
+          if @locator
+            page.within(@locator) do
+              page.see? text
+            end
+          else
+            page.see? text
+          end
+        end
+
+        match_when_negated do |page|
+          if @locator
+            page.within(@locator) do
+              page.not_see? text
+            end
+          else
+            page.not_see? text
+          end
+        end
+
+        failure_message do |page|
+          body = if @locator
+                   page.find(@locator).text
+                 else
+                   page.body
+                 end
+          "expected to see #{text} in #{body}"
+        end
+
+        failure_message_when_negated do |page|
+          body = if @locator
+                   page.find(@locator).text
+                 else
+                   page.body
+                 end
+          "expected not to see #{text} in #{body}"
+        end
+      end
+    end
+
+    def self.rspec_matchers_module
+      major_rspec_version, _ = RSpec::Core::Version::STRING.split('.')
+      self.const_get("V#{major_rspec_version}")
+    end
+
+    include rspec_matchers_module
   end
 
   class TestUser
