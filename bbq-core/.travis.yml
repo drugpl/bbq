@@ -9,3 +9,5 @@ gemfile:
   - gemfiles/capybara23.gemfile
   - gemfiles/rails3x.gemfile
   - gemfiles/rails4x.gemfile
+  - gemfiles/devise1x.gemfile
+  - gemfiles/devise3x.gemfile
