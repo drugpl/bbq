@@ -1,7 +1,9 @@
+require 'devise/version'
+
 # Use this hook to configure devise mailer, warden hooks and so forth. The first
 # four configuration values can also be set straight in your models.
 Devise.setup do |config|
-  config.secret_key = 'a4afae774b0c49455776c2fd27d0e0f632c4553436dffc00d6d5a90fc56ab437a938277fa36ef991c37033d28465598e1ab9be069a7e297dfefd1a658370fb55'
+  config.secret_key = 'a4afae774b0c49455776c2fd27d0e0f632c4553436dffc00d6d5a90fc56ab437a938277fa36ef991c37033d28465598e1ab9be069a7e297dfefd1a658370fb55' if Devise::VERSION.starts_with?("3.")
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
