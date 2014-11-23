@@ -8,12 +8,10 @@ Bundler.setup
 
 $:.unshift File.expand_path('../../../../lib', __FILE__)
 
-require 'sinatra'
-
 module Dope
-  class App < ::Sinatra::Base
-    get "/" do
-      "BBQ supports sinatra"
+  class App
+    def call(env)
+      ['200', {'Content-Type' => 'text/plain'}, ['BBQ supports rack']]
     end
   end
 end
