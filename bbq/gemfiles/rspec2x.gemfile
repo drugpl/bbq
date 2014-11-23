@@ -3,4 +3,4 @@ source "https://rubygems.org"
 gemspec :path => ".."
 
 gem "jruby-openssl", :platforms => :jruby
-gem "rspec", "~> 2.14"
+gem "rspec-rails", "~> 2.14"
