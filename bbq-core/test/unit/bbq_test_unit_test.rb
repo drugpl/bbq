@@ -7,7 +7,7 @@ class BbqTestUnitTest < Test::Unit::TestCase
     @log_path = 'test/dummy/log/test_driver.log'
   end
 
-  def test_sinatra
+  def test_rack
     create_file 'test/dope/test/acceptance/root_path_test.rb', <<-TESTCASE
       require 'app'
       require 'bbq/test_unit'
@@ -15,17 +15,17 @@ class BbqTestUnitTest < Test::Unit::TestCase
 
       class DopeAppRootTest < Bbq::TestCase
         background do
-          Bbq.app = ::Dope::App
+          Bbq.app = ::Dope::App.new
         end
 
         scenario "user see '/' page" do
           user = Bbq::TestUser.new
           user.visit "/"
-          user.see!("BBQ supports sinatra")
-          assert user.see?("BBQ supports sinatra")
+          user.see!("BBQ supports rack")
+          assert user.see?("BBQ supports rack")
 
           assert_raises(MiniTest::Assertion) { user.see!("blah") }
-          assert_raises(MiniTest::Assertion) { user.not_see!("BBQ supports sinatra") }
+          assert_raises(MiniTest::Assertion) { user.not_see!("BBQ supports rack") }
         end
       end
     TESTCASE
