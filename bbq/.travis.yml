@@ -7,3 +7,5 @@ gemfile:
   - gemfiles/capybara21.gemfile
   - gemfiles/capybara22.gemfile
   - gemfiles/capybara23.gemfile
+  - gemfiles/rails3x.gemfile
+  - gemfiles/rails4x.gemfile

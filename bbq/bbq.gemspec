@@ -28,5 +28,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "devise",      ">= 1.4.0"
   s.add_development_dependency "sinatra",     ">= 1.2.6"
   s.add_development_dependency "rspec-rails", "~> 2.6"
-  s.add_development_dependency "rails",       "~> 3.0"
+  s.add_development_dependency "rails",       ">= 3.0"
 end
