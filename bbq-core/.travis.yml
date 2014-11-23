@@ -5,3 +5,10 @@ rvm:
 
 matrix:
   allow_failures:
+
+gemfile:
+  - gemfiles/rspec2x.gemfile
+  - gemfiles/rspec3x.gemfile
+  - gemfiles/capybara21.gemfile
+  - gemfiles/capybara22.gemfile
+  - gemfiles/capybara23.gemfile
