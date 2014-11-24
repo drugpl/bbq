@@ -1,8 +1,8 @@
 require 'bbq'
 require 'bbq/session'
-require 'active_support/test_case'
 require 'test/unit'
 require 'test/unit/assertions'
+require 'active_support/test_case'
 
 module Bbq
   class TestCase < ActiveSupport::TestCase
