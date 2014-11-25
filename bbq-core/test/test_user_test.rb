@@ -1,7 +1,42 @@
 require 'test_helper'
-require 'bbq/test_user'
+require 'bbq/core/test_user'
 
-class TestUser < Bbq::TestUser
+
+def text(output)
+end
+
+def html(output)
+  ->{ ['200', {'Content-Type' => 'text/html'}, [output]] }
+end
+
+TestApp = Rack::Builder.new do
+  map '/' do
+    run ->(env) { ['200', {'Content-Type' => 'text/plain'}, ['BBQ']] }
+  end
+
+  map '/miracle' do
+    run ->(env) { ['200', {'Content-Type' => 'text/plain'}, ['MIRACLE']] }
+  end
+
+  map '/ponycorns' do
+    run ->(env) { ['200', {'Content-Type' => 'text/html'}, [<<HTML
+<ul id="unicorns">
+  <li>Pink</li>
+</ul>
+<ul id="ponies">
+  <li>Violet</li>
+</ul>
+<div id="new_pony">
+  <input type="text" name="color" value="" />
+</div>
+<a href="#">More ponycorns</a>
+HTML
+    ]] }
+  end
+end
+
+
+class TestUser < Bbq::Core::TestUser
   module Commenter
     def comment
     end
@@ -18,7 +53,15 @@ class TestUser < Bbq::TestUser
   end
 end
 
-class BbqTestUserTest < Test::Unit::TestCase
+class TestUserTest < Minitest::Test
+
+  def setup
+    Bbq::Core.app = TestApp
+  end
+
+  def teardown
+    Bbq::Core.app = nil
+  end
 
   def test_capybara_dsl_methods
     user = TestUser.new
@@ -59,16 +102,11 @@ class BbqTestUserTest < Test::Unit::TestCase
     assert @user.not_see?("Violet", :within => "#unicorns")
     assert ! @user.not_see?("Pink", :within => "#unicorns")
 
-    assert_nothing_raised do
-      @user.fill_in "color", :with => "red", :within => "#new_pony"
-    end
+    @user.fill_in "color", :with => "red", :within => "#new_pony"
     assert_raises Capybara::ElementNotFound do
       @user.fill_in "color", :with => "red", :within => "#new_unicorn"
     end
-
-    assert_nothing_raised do
-      @user.click_link "More ponycorns"
-    end
+    @user.click_link "More ponycorns"
   end
 
 end

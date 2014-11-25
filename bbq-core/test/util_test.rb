@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'bbq/util'
+require 'bbq/core/util'
 
 class User
   module Commenter
@@ -9,7 +9,7 @@ end
 module Commenter
 end
 
-class BbqUtilTest < Test::Unit::TestCase
+class UtilTest < Minitest::Test
 
   def test_find_module_in_object_namespace
     assert_commenter(User.new, User::Commenter)
@@ -27,13 +27,9 @@ class BbqUtilTest < Test::Unit::TestCase
     assert_commenter(nil, ::Commenter)
   end
 
-
-  private
-
-
   def assert_commenter(namespace, result)
     [:commenter, "commenter"].each do |name|
-      assert_equal Bbq::Util.find_module(name, namespace), result
+      assert_equal Bbq::Core::Util.find_module(name, namespace), result
     end
   end
 
