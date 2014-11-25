@@ -1,12 +1,2 @@
 rvm:
   - 1.9.3
-
-gemfile:
-  - gemfiles/rspec2x.gemfile
-  - gemfiles/rspec3x.gemfile
-  - gemfiles/capybara21.gemfile
-  - gemfiles/capybara22.gemfile
-  - gemfiles/capybara23.gemfile
-  - gemfiles/rails3x.gemfile
-  - gemfiles/devise1x.gemfile
-  - gemfiles/devise3x.gemfile
