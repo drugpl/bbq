@@ -4,6 +4,6 @@ rvm:
   - 2.1.4
   - rbx-19mode
 
-gemfiles:
+gemfile:
   - Gemfile.rspec2
   - Gemfile.rspec3
