@@ -1,6 +1,7 @@
 # Bbq-rspec
 
-[![Build Status](https://secure.travis-ci.org/drugpl/bbq-rspec.png)](http://travis-ci.org/drugpl/bbq-rspec)
+[![Build Status](https://secure.travis-ci.org/drugpl/bbq-rspec.png)](http://travis-ci.org/drugpl/bbq-rspec) [![Dependency Status](https://gemnasium.com/drugpl/bbq-rspec.png)](https://gemnasium.com/drugpl/bbq-rspec) [![Code Climate](https://codeclimate.com/github/drugpl/bbq-rspec.png)](https://codeclimate.com/github/drugpl/bbq-rspec) [![Gem Version](https://badge.fury.io/rb/bbq-rspec.png)](http://badge.fury.io/rb/bbq-rspec)
+
 
 RSpec integration for object oriented acceptance testing with [bbq](https://github.com/drugpl/bbq).
 
