@@ -20,12 +20,6 @@ module Bbq
       end
     end
 
-    class TestUser
-      include Capybara::RSpecMatchers
-      include ::Bbq::RSpec::Matchers
-      include ::RSpec::Matchers
-    end
-
     ::RSpec.configure do |config|
       if Gem::Version.new(::RSpec::Core::Version::STRING) >= Gem::Version.new('2.99')
         config.include Feature, :type => :acceptance, :file_path => %r{spec/acceptance}
@@ -36,6 +30,14 @@ module Bbq
       config.after :each, :type => :acceptance do
         ::Bbq::Session.pool.release
       end
+    end
+  end
+
+  module Core
+    class TestUser
+      include Capybara::RSpecMatchers
+      include ::Bbq::RSpec::Matchers
+      include ::RSpec::Matchers
     end
   end
 end

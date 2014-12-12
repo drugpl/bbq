@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Bbq RSpec matchers' do
+describe 'RSpec matchers' do
 
   specify 'see given string' do
     user = Bbq::Core::TestUser.new
