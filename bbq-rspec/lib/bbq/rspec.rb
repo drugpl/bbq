@@ -27,7 +27,11 @@ module Bbq
     end
 
     ::RSpec.configure do |config|
-      config.include Feature, :type => :acceptance, :example_group => {:file_path => %r{spec/acceptance}}
+      if Gem::Version.new(::RSpec::Core::Version::STRING) >= Gem::Version.new('2.99')
+        config.include Feature, :type => :acceptance, :file_path => %r{spec/acceptance}
+      else
+        config.include Feature, :type => :acceptance, :example_group => {:file_path => %r{spec/acceptance}}
+      end
       config.include Matchers
       config.after :each, :type => :acceptance do
         ::Bbq::Session.pool.release
