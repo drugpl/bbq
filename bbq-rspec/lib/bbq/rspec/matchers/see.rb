@@ -1,5 +1,3 @@
-require 'capybara/helpers'
-
 module Bbq
   module RSpec
     module Matchers
@@ -59,7 +57,7 @@ module Bbq
               when Regexp
                 text.inspect
               else
-                Capybara::Helpers.normalize_whitespace(text).inspect
+                text.to_s.gsub(/[[:space:]]+/, ' ').strip.inspect
             end
           end
         end
