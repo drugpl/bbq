@@ -1,5 +1,5 @@
-require "bbq"
-require "bbq/session"
+require "bbq/core"
+require "bbq/core/test_user"
 require "bbq/rspec/version"
 require "bbq/rspec/matchers"
 require "rspec/core"

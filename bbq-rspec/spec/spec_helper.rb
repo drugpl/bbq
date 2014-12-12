@@ -1,7 +1,7 @@
+require 'bbq/rspec'
 require 'rack/builder'
-require 'bbq/test_user'
 
-Bbq.app = Rack::Builder.new do
+Bbq::Core.app = Rack::Builder.new do
   map '/test_page' do
     html_page = <<-EOP
       <!DOCTYPE html>
