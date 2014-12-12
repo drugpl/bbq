@@ -7,7 +7,7 @@ Bbq::Core.app = Rack::Builder.new do
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Dummy</title>
+          <title>Ponycorns</title>
         </head>
         <body>
           <ul id="unicorns">
@@ -16,10 +16,6 @@ Bbq::Core.app = Rack::Builder.new do
           <ul id="ponies">
             <li>Violet</li>
           </ul>
-          <div id="new_pony">
-            <input type="text" name="color" value="" />
-          </div>
-          <a href="#">More ponycorns</a>
         </body>
       </html>
     EOP
