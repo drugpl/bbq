@@ -21,3 +21,4 @@ end
 
 DummyApplication.initialize!
 DummyApplication.routes.draw { root to: 'dummy#index' }
+DummyApplication.routes.default_url_options[:host] = 'example.com'
