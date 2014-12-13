@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'bbq/core/test_user'
 
-class RailsIntegration < Minitest::Test
+class RailsIntegration < TestCase
 
   def test_rails_integration
     user = Bbq::Core::TestUser.new
