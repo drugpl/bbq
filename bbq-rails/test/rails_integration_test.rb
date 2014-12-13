@@ -1,6 +1,3 @@
-$LOAD_PATH << '/Users/pawel/Code/bbq-rails/test'
-$LOAD_PATH << '/Users/pawel/Code/bbq-rails/lib'
-
 require 'test_helper'
 require 'bbq/core/test_user'
 
