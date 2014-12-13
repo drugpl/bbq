@@ -28,7 +28,7 @@ module Bbq
       end
       config.include Matchers
       config.after :each, :type => :acceptance do
-        ::Bbq::Session.pool.release
+        ::Bbq::Core::Session.pool.release
       end
     end
   end
