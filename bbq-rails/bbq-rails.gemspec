@@ -1,0 +1,27 @@
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'bbq/rails/version'
+
+Gem::Specification.new do |spec|
+  spec.name          = "bbq-rails"
+  spec.version       = Bbq::Rails::VERSION
+  spec.authors       = ["Paweł Pacana"]
+  spec.email         = ["pawel.pacana@gmail.com"]
+  spec.summary       = %q{Rails integration for bbq.}
+  spec.description   = spec.summary
+  spec.homepage      = ""
+  spec.license       = "MIT"
+
+  spec.files         = `git ls-files -z`.split("\x0")
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
+
+  spec.add_dependency "bbq-core", ">= 0.0"
+
+  spec.add_development_dependency "bundler",  "~> 1.7"
+  spec.add_development_dependency "rake",     "~> 10.0"
+  spec.add_development_dependency "rails",    ">= 3.0"
+  spec.add_development_dependency "minitest", "~> 5.0"
+end

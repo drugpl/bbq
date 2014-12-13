@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+
+gemspec
+gem 'bbq-core', github: 'drugpl/bbq-core'
+gem 'rails', '~> 4.0'
