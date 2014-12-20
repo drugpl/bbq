@@ -1,0 +1,5 @@
+
+To finish setup, place in your spec/spec_helper.rb the following:
+
+  require 'bbq/rspec'
+
