@@ -2,4 +2,5 @@ source 'https://rubygems.org'
 
 gemspec
 gem 'bbq-core', github: 'drugpl/bbq-core'
-gem 'rails', '~> 3.1.0'
+gem 'rails',    '~> 3.1.0'
+gem 'minitest', '~> 4.0'
