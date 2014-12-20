@@ -1,12 +1,5 @@
-require 'bbq/util'
+require 'bbq/core/roles'
 
 module Bbq
-  module Roles
-    def roles(*names)
-      names.each do |name|
-        module_obj = Bbq::Util.find_module(name, self)
-        self.extend(module_obj)
-      end
-    end
-  end
+  Roles = ::Bbq::Core::Roles
 end

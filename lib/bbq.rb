@@ -1,17 +1,16 @@
-require 'pathname'
+require 'bbq/core'
+require 'bbq/rails' if defined(::Rails)
 
 module Bbq
   class << self
-    def root
-      @root ||= Pathname.new(File.expand_path(File.join(File.dirname(__FILE__), '..')))
+
+    def app
+      Bbb::Core.app
     end
 
-    def rails?
-      defined?(::Rails)
+    def app=(value)
+      Bbq::Core.app = value
     end
 
-    attr_accessor :app
   end
 end
-
-require 'bbq/railtie' if Bbq.rails?
