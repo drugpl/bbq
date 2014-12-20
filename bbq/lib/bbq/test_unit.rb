@@ -1,5 +1,4 @@
-require 'bbq'
-require 'bbq/session'
+require 'bbq/core/session'
 require 'test/unit'
 require 'test/unit/assertions'
 require 'active_support/test_case'
@@ -14,11 +13,10 @@ module Bbq
     alias :background :setup
 
     teardown do
-      Bbq::Session.pool.release
+      Bbq::Core::Session.pool.release
     end
   end
 
-  # test/unit specific methods for test_user
   class TestUser
     include Test::Unit::Assertions
 
