@@ -1,5 +1,5 @@
 require 'bbq/core'
-require 'bbq/rails' if defined(::Rails)
+require 'bbq/rails' if defined?(::Rails)
 
 module Bbq
   class << self
