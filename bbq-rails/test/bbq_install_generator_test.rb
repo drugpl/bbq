@@ -1,12 +1,12 @@
 require "test_helper"
 require "rails/generators/test_case"
-require "generators/bbq/rails/install_generator"
+require "generators/bbq/install_generator"
 
 class BbqInstallGeneratorTest < Rails::Generators::TestCase
   destination File.expand_path(File.join(File.dirname(__FILE__), '../tmp'))
   setup :prepare_destination
 
-  tests Bbq::Rails::InstallGenerator
+  tests Bbq::InstallGenerator
 
   def test_creating_test_unit_test_directories
     run_generator %w(-t test_unit)

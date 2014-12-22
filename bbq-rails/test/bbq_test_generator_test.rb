@@ -1,12 +1,12 @@
 require "test_helper"
 require "rails/generators/test_case"
-require "generators/bbq/rails/test_generator"
+require "generators/bbq/test_generator"
 
 class BbqTestGeneratorTest < ::Rails::Generators::TestCase
   destination File.expand_path(File.join(File.dirname(__FILE__), '../tmp'))
   setup :prepare_destination
 
-  tests Bbq::Rails::TestGenerator
+  tests Bbq::TestGenerator
 
   def test_creating_test_unit_feature_file
     run_generator %w(MySuperThing -t test_unit)
