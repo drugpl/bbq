@@ -6,9 +6,9 @@ require 'bbq/rails/version'
 Gem::Specification.new do |spec|
   spec.name          = "bbq-rails"
   spec.version       = Bbq::Rails::VERSION
-  spec.authors       = ["Paweł Pacana"]
-  spec.email         = ["pawel.pacana@gmail.com"]
-  spec.summary       = %q{Rails integration for bbq.}
+  spec.authors       = ["DRUG - Dolnośląska Grupa Użytkowników Ruby"]
+  spec.email         = ["all@drug.org.pl"]
+  spec.summary       = %q{Rails integration for Bbq.}
   spec.description   = spec.summary
   spec.homepage      = ""
   spec.license       = "MIT"
