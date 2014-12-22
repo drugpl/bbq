@@ -25,7 +25,7 @@ Generators help you kickstart Bbq test environment.
 
 At the beginning of your journey with Bbq you can use `rails generate bbq:install`. It'll create directory for acceptance test files and give you basic TestUser class for customization.
 
-There's also `rails generate bbq:test` which creates new test files for you which have Bbq goodies baked (DSL and test actor session pool handling).
+There's also `rails generate bbq:test` which creates new test files for you which have Bbq goodies baked in (DSL and test actor session pool handling).
 
 ### Rake integration
 
