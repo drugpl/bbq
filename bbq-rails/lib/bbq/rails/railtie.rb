@@ -11,7 +11,7 @@ module Bbq
       end
 
       rake_tasks do
-        load File.expand_path(File.join(File.dirname(__FILE__), '../lib/tasks/bbq.rake'))
+        load File.expand_path(File.join(File.dirname(__FILE__), '../../tasks/bbq.rake'))
       end
 
       helper_generators = %w(test_unit rspec).flat_map do |test_framework|
