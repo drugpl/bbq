@@ -1,0 +1,9 @@
+
+To finish setup, place in your test/test_helper.rb the following:
+
+  require 'bbq/test_unit'
+
+Also make sure that you require there support files:
+
+  # Load support files
+  Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
