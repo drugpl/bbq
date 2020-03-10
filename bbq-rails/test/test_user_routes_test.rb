@@ -2,7 +2,7 @@ require 'test_helper'
 require 'bbq/core/test_user'
 require 'bbq/rails/routes'
 
-class TestUserRoutesTest < TestCase
+class TestUserRoutesTest < Minitest::Test
   class TestUserWithRoutes < Bbq::Core::TestUser
     include ::Bbq::Rails::Routes
 

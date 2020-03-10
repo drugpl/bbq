@@ -23,6 +23,5 @@ Gem::Specification.new do |s|
   s.add_dependency "activesupport", ">= 2.0"
 
   s.add_development_dependency "rake"
-  s.add_development_dependency "rdoc",     "~> 3.7"
   s.add_development_dependency "minitest", "~> 5.0"
 end
