@@ -1,0 +1,14 @@
+*.gem
+.bundle
+Gemfile.lock
+pkg/*
+bin/*
+tmp/*
+test/dummy/db/*.sqlite3
+test/dummy/log/*.log
+test/dummy/tmp/
+test/dummy/test/acceptance/*
+test/dummy/spec/acceptance/*
+test/dope/test/acceptance/*
+test/dope/spec/acceptance/*
+nbproject/

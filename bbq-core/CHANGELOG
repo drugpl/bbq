@@ -1,0 +1,47 @@
+0.2.1 / 2013-08-22
+==================
+
+	* bugfix: Bbq::TestClient propagates NoMethodErrors from the controller of
+	tested app instead of rising unsupported method errors.
+
+0.2.0 / 2013-01-06
+==================
+
+	* Dropped support for Ruby 1.8.7
+	* Capybara 2.0 support
+
+0.1.0 / 2013-01-06
+==================
+
+  * Extracted Rails' URL helpers inclusion to separate module
+  * Include only Capybara::Session::DSL_METHODS in TestUser, not the whole Capybara::DSL
+  * Added Capybara sessions pool
+  * Moved Test::User default options to separate method
+  * Added Test::Client for testing REST APIs
+  * Renamed bbq/test.rb to bbq/test_unit.rb. You may want to fix your test_helper.
+  * Moved require bbq/test_user to generated test_user.rb. You may want to update your existing test_user.rb.
+	* Fixed Capybara 'within' scope for RSpec flavour
+
+0.0.4 / 2011-10-19
+==================
+
+  * Make Bbq work with Capybara 1.0 and 1.1
+  * Rails is development dependency
+
+0.0.3 / 2011-07-14
+==================
+
+  * Added support and tests for Sinatra
+  * Added Bbq.app and Bbq.app=
+
+0.0.2 / 2011-07-01
+==================
+
+  * Extracted Bbq::TestUser::Eyes module
+  * Added :within option to TestUser methods
+  * Fix tests for ree and ruby187
+
+0.0.1 / 2011-04-20
+==================
+
+  * Bbq introduced to the wild world!
