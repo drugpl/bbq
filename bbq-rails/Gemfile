@@ -1,0 +1,7 @@
+source 'https://rubygems.org'
+
+gemspec
+
+gem 'bbq-core', path: '../bbq-core'
+gem 'rails', '~> 5.0'
+gem 'capybara', '~> 3.31'

@@ -1,5 +1,0 @@
-source 'https://rubygems.org'
-
-gemspec
-gem 'rspec', '~> 2.0'
-gem 'bbq-core', github: 'drugpl/bbq-core'

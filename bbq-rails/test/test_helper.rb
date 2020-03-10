@@ -2,11 +2,6 @@ require 'minitest/autorun'
 require 'bbq/rails'
 require 'action_controller/railtie'
 
-TestCase = begin
-  Minitest::Test
-rescue NameError
-  MiniTest::Unit::TestCase
-end
 
 class DummyApplication < ::Rails::Application
   config.eager_load   = false
