@@ -19,10 +19,10 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency "bbq-core" ,     "= 0.3.0"
-  s.add_dependency "bbq-rspec",     "= 0.3.0"
-  s.add_dependency "bbq-rails",     "= 0.3.0"
-  s.add_dependency "bbq-devise",    "= 0.3.0"
+  s.add_dependency "bbq-core" , "= 0.4.0"
+  s.add_dependency "bbq-rspec", "= 0.4.0"
+  s.add_dependency "bbq-rails", "= 0.4.0"
+  s.add_dependency "bbq-devise", "= 0.4.0"
   s.add_dependency "activesupport", ">= 2.0"
 
   s.add_development_dependency "rake"
