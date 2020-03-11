@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "bbq-core", "= 0.3.0"
+  spec.add_dependency "bbq-core", "= 0.4.0"
 
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rails",    ">= 5.0"
